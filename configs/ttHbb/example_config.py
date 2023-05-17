@@ -35,7 +35,7 @@ cfg = Configurator(
         "filter" : {
             "samples": ["ttHTobb"],
             "samples_exclude" : [],
-            "year": ['2018']
+            "year": ["2016","2017","2018"]
         }
     },
 
@@ -140,6 +140,6 @@ run_options = {
         "retries"        : 50,
         "treereduction"  : 20,
         "adapt"          : False,
-        
+        "skipbadfiles"   : 10
     }
    
