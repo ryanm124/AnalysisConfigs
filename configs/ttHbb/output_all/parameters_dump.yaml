@@ -243,7 +243,7 @@ default_jets_calibration:
         - /afs/cern.ch/user/r/rmccarth/private/ttH/update/PocketCoffea/pocket_coffea/parameters/jec/Summer19UL18_V5_MC_UncertaintySources_AK8PFPuppi.junc.txt.gz
         - /afs/cern.ch/user/r/rmccarth/private/ttH/update/PocketCoffea/pocket_coffea/parameters/jec/Summer19UL18_V5_MC_Uncertainty_AK8PFPuppi.junc.txt.gz
 jets_calibration:
-  factory_file: /afs/cern.ch/user/r/rmccarth/private/ttH/update/PocketCoffea/pocket_coffea/parameters/jec//jets_calibrator_JES_JER_Syst.pkl.gz
+  factory_file: ./jets_calibrator_JES_JER_Syst.pkl.gz
   jet_types:
     AK4PFchs:
       2016_PreVFP:
@@ -384,7 +384,7 @@ btagging:
       bbtagSF_DDBvL_M1_hiPt_down: 0.67
     '2018':
       btagging_algorithm: btagDeepFlavB
-      btagging_WP: 0.277
+      btagging_WP: 0.2783
       bbtagging_algorithm: btagDDBvL
       bbtagging_WP: 0.86
       bbtagSF_DDBvL_M1_loPt: 0.81
@@ -527,12 +527,12 @@ systematic_variations:
     JER: null
 object_preselection:
   Muon:
-    pt: 25
+    pt: 20
     eta: 2.4
     iso: 0.25
     id: looseId
   Electron:
-    pt: 25
+    pt: 20
     eta: 2.4
     iso: 0.06
     id: mvaFall17V2Iso_WPL

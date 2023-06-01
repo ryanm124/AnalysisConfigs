@@ -1,4 +1,5 @@
-from pocket_coffea.workflows.tthbb_base_processor import ttHbbBaseProcessor
+import workflow
+from workflow import ttHbbBaseProcessor
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_eq, get_nBtagEq, get_nBtagMin, get_HLTsel
 from pocket_coffea.parameters.histograms import *
@@ -28,8 +29,8 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_local_2018.json",
-                  f"{localdir}/datasets/backgrounds_MC_ttbar_local_2017.json",
+        "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_2018.json",
+                  f"{localdir}/datasets/backgrounds_MC_ttbar_2017.json",
                   f"{localdir}/datasets/DATA_SingleEle_2017.json",
                   f"{localdir}/datasets/DATA_SingleEle_2018.json",
                     ],
@@ -120,16 +121,16 @@ cfg = Configurator(
 
 
 run_options = {
-        "executor"       : "dask/slurm",
-        "env"            : "conda",
+        "executor"       : "dask/lxplus",
+        "env"            : "singularity",
         "workers"        : 1,
-        "scaleout"       : 20,
-        "queue"          : "standard",
+        "scaleout"       : 50,
+        "queue"          : "microcentury",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,
-        "chunk"          : 200000,
+        "chunk"          : 400000,
         "retries"        : 50,
         "treereduction"  : 20,
         "adapt"          : False,

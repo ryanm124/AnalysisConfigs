@@ -6,6 +6,7 @@ from pocket_coffea.parameters.histograms import *
 from pocket_coffea.parameters.btag import btag_variations
 import workflow
 from workflow import ttHbbBaseProcessor
+from pocket_coffea.lib.columns_manager import ColOut
 
 import cloudpickle
 import custom_cut_functions 
@@ -35,7 +36,7 @@ cfg = Configurator(
         "filter" : {
             "samples": ["ttHTobb"],
             "samples_exclude" : [],
-            "year": ["2016","2017","2018"]
+            "year": ["2018"]
         }
     },
 
@@ -120,7 +121,22 @@ cfg = Configurator(
        ),
        
 
+    },
+    columns = {
+        "common": {},
+        "bysample": {
+            "ttHTobb": {
+                "bycategory": {
+                    "baseline": [
+                        ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB"]),
+                        ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
+                        ColOut("LeptonGood",["eta","pt","phi","pdgId"])
+                    ]
+                }
+            }
+        }
     }
+    
 )
 
 
@@ -131,6 +147,7 @@ run_options = {
         "env"            : "singularity",
         "workers"        : 1,
         "scaleout"       : 50,
+        "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
         "queue"          : "microcentury",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
