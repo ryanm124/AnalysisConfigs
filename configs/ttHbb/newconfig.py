@@ -9,7 +9,11 @@ import os
 from pocket_coffea.workflows.tthbb_base_processor import ttHbbBaseProcessor 
 
 # importing custom cut functions
-from custom_cut_functions import *
+import custom_cut_functions
+from  custom_cut_functions import *
+import cloudpickle
+#cloudpickle.register_pickle_by_value(workflow)
+cloudpickle.register_pickle_by_value(custom_cut_functions)
 localdir = os.path.dirname(os.path.abspath(__file__))
 
 # Loading default parameters
@@ -20,17 +24,35 @@ defaults.register_configuration_dir("config_dir", localdir+"/params")
 # merging additional analysis specific parameters
 parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection.yaml",
+                                                  f"{localdir}/params/btagging.yaml",
                                                   f"{localdir}/params/triggers.yaml",
                                                   update=True)
 
 # Configurator instance
+#                  #f"{localdir}/datasets/DYJetsToLL_M-50_2018_redirector.json",                                                                               
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/backgrounds_MC_TTbb_dileptonic_redirector.json"
+        "jsons": [f"{localdir}/datasets/DATA_SingleMuon_redirector.json",
+                  f"{localdir}/datasets/backgrounds_MC_TTbb_dileptonic_redirector.json",
+                  f"{localdir}/datasets/signal_ttHTobb_redirector.json",
+                  f"{localdir}/datasets/TTTo2L2Nu_2018_redirector.json",
+                  f"{localdir}/datasets/TTToHadronic_2018_redirector.json",
+                  f"{localdir}/datasets/TTToSemiLeptonic_2018_redirector.json",
+                  f"{localdir}/datasets/TTWJetsToLNu_2018_redirector.json",
+                  f"{localdir}/datasets/TTWJetsToQQ_2018_redirector.json",                  
+                  f"{localdir}/datasets/TTZtoLLNuNu_2018_redirector.json",
+                  f"{localdir}/datasets/TTZToQQ_2018_redirector.json",
+                  f"{localdir}/datasets/WJetsToLNu_HT-400To600_2018_redirector.json",
+                  f"{localdir}/datasets/WJetsToLNu_HT-600To800_2018_redirector.json",
+                  f"{localdir}/datasets/WJetsToLNu_HT-800To1200_2018_redirector.json",
+                  f"{localdir}/datasets/WJetsToLNu_HT-1200To2500_2018_redirector.json",
+                  f"{localdir}/datasets/WJetsToLNu_HT-2500ToInf_2018_redirector.json",
+
+
                     ],
         "filter" : {
-            "samples": ["TTbbDiLeptonic"],
+            "samples": ["SingleMuon","TTbbDiLeptonic", "signal_ttHTobb", "TTTo2L2Nu", "TTToHadronic", "TTToSemiLeptonic","TTWJetsToLNu", "TTWJetsToQQ", "TTZtoLLNuNu", "TTZToQQ" , "WJetsToLNu_HT-400To600", "WJetsToLNu_HT-600To800", "WJetsToLNu_HT-800To1200", "WJetsToLNu_HT-1200To2500", "WJetsToLNu_HT-2500ToInf" ],
             "samples_exclude" : [],
             "year": ['2018']
         }
@@ -42,7 +64,7 @@ cfg = Configurator(
     # Skimming and categorization
     skim = [
              get_nObj_min(1, 200., "FatJet"),
-             get_HLTsel()
+             get_HLTsel(primaryDatasets=["DoubleEle","EleMu","DoubleMu"])
              ],
              
     preselections = [dilepton_presel,
@@ -76,23 +98,15 @@ cfg = Configurator(
                                 "sf_ele_reco", "sf_ele_id",
                                 "sf_mu_id", "sf_mu_iso",
                                  "sf_jet_puId","sf_btag"  
-                              ],
-                "bycategory" : {
-                }
+                              ]
             },
-            "bysample": {
-             
-                
-            } 
+          
         },
-       
-       
        
     },
 
     
     variables = {
-        "HT" : HistConf([Axis(coll="events", field="events", bins=100, start=0, stop=200, label="HT")] ),
         "leading_jet_pt_eta" : HistConf(
             [
                 Axis(coll="JetGood", field="pt", bins=40, start=0, stop=200, pos=0, label="Leading jet $p_T$"),
@@ -127,9 +141,9 @@ cfg = Configurator(
         **jet_hists(name="bjet",coll="BJetGood", pos=1),
         **jet_hists(name="bjet",coll="BJetGood", pos=2),
         **fatjet_hists(name="fatjet",coll="FatJetGood"),
-        **fatjet_hists(name="bbfatjetTight",coll="BBFatJetGoodT"),
-        **fatjet_hists(name="bbfatjetMedium",coll="BBFatJetGoodM"),
-        **fatjet_hists(name="bbfatjetLoose",coll="BBFatJetGoodL"),
+        #**fatjet_hists(name="bbfatjetTight",coll="BBFatJetGoodT"),
+        #**fatjet_hists(name="bbfatjetMedium",coll="BBFatJetGoodM"),
+        #**fatjet_hists(name="bbfatjetLoose",coll="BBFatJetGoodL"),
 
        # 2D plots
        "jet_eta_pt_leading": HistConf(
@@ -162,9 +176,9 @@ cfg = Configurator(
                         ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
                         ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
                         ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
-                        ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
-                        ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
-                        ColOut("BBFatJetGoodL", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"])
+                        #ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
+                        #ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
+                        #ColOut("BBFatJetGoodL", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"])
                     ]
                 }
             }
@@ -193,7 +207,7 @@ run_options = {
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,
-        "chunk"          : 400000,
+        "chunk"          : 150000,
         "retries"        : 50,
         "treereduction"  : 20,
         "adapt"          : False,
