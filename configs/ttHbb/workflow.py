@@ -8,6 +8,7 @@ from pocket_coffea.lib.objects import (
     lepton_selection,
     jet_selection,
     btagging,
+    bbtagging,
     get_dilepton,
 )
 
@@ -51,7 +52,16 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["BJetGood"] = btagging(
             self.events["JetGood"], self.params.btagging.working_point[self._year]
         )
-
+        self.events["BBFatJetGoodT"] = bbtagging(
+            self.events["FatJetGood"], self.params.btagging.working_point[self._year], "T"
+        )
+        self.events["BBFatJetGoodM"] = bbtagging(
+            self.events["FatJetGood"], self.params.btagging.working_point[self._year], "M"
+        )
+        self.events["BBFatJetGoodL"] = bbtagging(
+            self.events["FatJetGood"], self.params.btagging.working_point[self._year], "L"
+        )
+        
         self.events["ll"] = get_dilepton(
             self.events.ElectronGood, self.events.MuonGood
         )
@@ -66,6 +76,10 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["nJetGood"] = ak.num(self.events.JetGood)
         self.events["nBJetGood"] = ak.num(self.events.BJetGood)
         self.events["nfatjet"]   = ak.num(self.events.FatJetGood)
+        self.events["nBBFatJetGoodT"]   = ak.num(self.events.BBFatJetGoodT)
+        self.events["nBBFatJetGoodM"]   = ak.num(self.events.BBFatJetGoodM)
+        self.events["nBBFatJetGoodL"]   = ak.num(self.events.BBFatJetGoodL)
+        
 
     # Function that defines common variables employed in analyses and save them as attributes of `events`
     def define_common_variables_before_presel(self, variation):

@@ -31,10 +31,10 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/signal_ttHTobb_redirector.json"
+        "jsons": [f"{localdir}/datasets/backgrounds_MC_TTbb_dileptonic_redirector.json"
                     ],
         "filter" : {
-            "samples": ["ttHTobb"],
+            "samples": ["TTbbDiLeptonic"],
             "samples_exclude" : [],
             "year": ["2018"]
         }
@@ -45,7 +45,8 @@ cfg = Configurator(
     skim = [get_nObj_min(1, 200., "FatJet"),
             get_HLTsel(primaryDatasets=["DoubleEle","EleMu","DoubleMu"])], 
     
-    preselections = [dilepton_presel],
+    preselections = [dilepton_presel,
+                     get_nObj_min(2,25,"LeptonGood")],
     categories = {
         "baseline": [passthrough],
         "1b" : [ get_nBtagEq(1, coll="BJetGood")],
@@ -101,6 +102,9 @@ cfg = Configurator(
         **jet_hists(name="bjet",coll="BJetGood", pos=1),
         **jet_hists(name="bjet",coll="BJetGood", pos=2),
         **fatjet_hists(name="fatjet",coll="FatJetGood"),
+        **fatjet_hists(name="bbfatjetTight",coll="BBFatJetGoodT"),
+        **fatjet_hists(name="bbfatjetMedium",coll="BBFatJetGoodM"),
+        **fatjet_hists(name="bbfatjetLoose",coll="BBFatJetGoodL"),
 
        # 2D plots
        "jet_eta_pt_leading": HistConf(
@@ -125,12 +129,16 @@ cfg = Configurator(
     columns = {
         "common": {},
         "bysample": {
-            "ttHTobb": {
+            "TTbbDiLeptonic": {
                 "bycategory": {
                     "baseline": [
                         ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB"]),
                         ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
-                        ColOut("LeptonGood",["eta","pt","phi","pdgId"])
+                        ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
+                        ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
+                        ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
+                        ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
+                        ColOut("BBFatJetGoodL", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"])
                     ]
                 }
             }
