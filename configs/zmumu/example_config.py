@@ -23,7 +23,9 @@ defaults.register_configuration_dir("config_dir", localdir+"/params")
 parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection.yaml",
                                                   f"{localdir}/params/triggers.yaml",
+                                                  f"{localdir}/params/plotting.yaml",
                                                   update=True)
+
 
 
 cfg = Configurator(
@@ -108,7 +110,6 @@ run_options = {
         "chunk"          : 400000,
         "retries"        : 50,
         "treereduction"  : 20,
-        "adapt"          : False,
-        
+        "adapt"          : False
     }
    

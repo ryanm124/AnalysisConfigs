@@ -25,7 +25,6 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/triggers.yaml",
                                                   update=True)
 
-
 cfg = Configurator(
     parameters = parameters,
     datasets = {
@@ -70,126 +69,7 @@ cfg = Configurator(
         "weights": {"common": {"inclusive": [], "bycategory": {}}, "bysample": {}},
     },
     
-    variables = {
-        **jet_hists(coll="JetGood"),
-        **jet_hists(coll="BJetGood"),
-        **ele_hists(coll="ElectronGood"),
-        **muon_hists(coll="MuonGood"),
-        **count_hist(name="nJets", coll="JetGood", bins=10, start=4, stop=14),
-        **count_hist(name="nBJets", coll="BJetGood", bins=12, start=2, stop=14),
-        **jet_hists(coll="JetGood", pos=0),
-        **jet_hists(coll="JetGood", pos=1),
-        **jet_hists(coll="JetGood", pos=2),
-        **jet_hists(coll="JetGood", pos=3),
-        **jet_hists(coll="JetGood", pos=4),
-        **jet_hists(name="bjet", coll="BJetGood", pos=0),
-        **jet_hists(name="bjet", coll="BJetGood", pos=1),
-        **jet_hists(name="bjet", coll="BJetGood", pos=2),
-        **jet_hists(name="bjet", coll="BJetGood", pos=3),
-        **jet_hists(name="bjet", coll="BJetGood", pos=4),
-        **count_hist(name="nPartons", coll="Parton", bins=10, start=0, stop=10),
-        **count_hist(
-            name="nPartonsMatched", coll="PartonMatched", bins=10, start=0, stop=10
-        ),
-        **parton_hists(coll="Parton", fields=["pt", "eta", "phi", "pdgId"]),
-        **parton_hists(coll="PartonMatched"),
-        "NJet_Nparton_total": HistConf(
-            [
-                Axis(
-                    coll="events",
-                    field="nJetGood",
-                    bins=11,
-                    start=4,
-                    stop=15,
-                    label="N. jets",
-                ),
-                Axis(
-                    coll="events",
-                    field="nParton",
-                    bins=11,
-                    start=4,
-                    stop=15,
-                    label="N. partons",
-                ),
-            ],
-            variations=False,
-            no_weights=True,
-        ),
-        "NJet_Nparton_matched": HistConf(
-            [
-                Axis(
-                    coll="events",
-                    field="nJetGood",
-                    bins=11,
-                    start=4,
-                    stop=15,
-                    label="N. jets",
-                ),
-                Axis(
-                    coll="events",
-                    field="nPartonMatched",
-                    bins=15,
-                    start=0,
-                    stop=15,
-                    label="N. partons matched",
-                ),
-            ],
-            variations=False,
-            no_weights=True,
-        ),
-        "Nparton_Nparton_matched": HistConf(
-            [
-                Axis(
-                    coll="events",
-                    field="nParton",
-                    bins=11,
-                    start=4,
-                    stop=15,
-                    label="N. partons",
-                ),
-                Axis(
-                    coll="events",
-                    field="nPartonMatched",
-                    bins=15,
-                    start=0,
-                    stop=15,
-                    label="N. partons matched",
-                ),
-            ],
-            variations=False,
-            no_weights=True,
-        ),
-        "hist_ptComparison_parton_matching": HistConf(
-            [
-                Axis(
-                    coll="JetGoodMatched",
-                    field="pt",
-                    bins=40,
-                    start=0,
-                    stop=300,
-                    label="Jet Pt",
-                ),
-                Axis(
-                    coll="PartonMatched",
-                    field="pt",
-                    bins=40,
-                    start=0,
-                    stop=300,
-                    label="Parton Pt",
-                ),
-                Axis(
-                    coll="JetGoodMatched",
-                    field="eta",
-                    bins=5,
-                    start=-2.4,
-                    stop=2.4,
-                    label="Jet $\eta$",
-                ),
-            ],
-            variations=False,
-            no_weights=True,
-        ),
-    },
+    variables = {},
     columns = {
         "common": {
             "inclusive": [],
@@ -198,10 +78,10 @@ cfg = Configurator(
             "ttHTobb": {
                 "bycategory": {
                     "semilep_LHE": [
-                        ColOut("Parton", ["pt", "eta", "phi", "pdgId", "provenance"]),
+                        ColOut("Parton", ["pt", "eta", "phi", "mass", "pdgId", "provenance"]),
                         ColOut(
                             "PartonMatched",
-                            ["pt", "eta", "phi", "pdgId", "provenance", "dRMatchedJet"],
+                            ["pt", "eta", "phi","mass", "pdgId", "provenance", "dRMatchedJet"],
                         ),
                         ColOut(
                             "JetGood",
@@ -218,9 +98,14 @@ cfg = Configurator(
                                 "dRMatchedJet",
                             ],
                         ),
+                        ColOut("HiggsParton",
+                               ["pt","eta","phi","mass","pdgId"], pos_end=1, store_size=False),
                         ColOut("LeptonGood",
                                ["pt","eta","phi"],
-                               pos_end=1)
+                               pos_end=1, store_size=False),
+                        ColOut("MET", ["phi","pt","significance"]),
+                        ColOut("Generator",["x1","x2","id1","id2","xpdf1","xpdf2"]),
+                        ColOut("LeptonParton",["pt","eta","phi","mass","pdgId"])
                     ]
                 }
             }

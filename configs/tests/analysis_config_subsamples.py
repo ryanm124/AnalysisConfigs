@@ -3,7 +3,6 @@ from workflow import ttHbbBaseProcessor
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_functions import get_nObj_min, get_nObj_eq, get_nBtagEq, get_nBtagMin, get_HLTsel
 from pocket_coffea.parameters.histograms import *
-from pocket_coffea.parameters.btag import btag_variations
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.columns_manager import ColOut
 
@@ -31,8 +30,8 @@ cfg = Configurator(
     datasets = {
         "jsons": [f"{localdir}/datasets/backgrounds_MC_ttbar_2018.json",
                   f"{localdir}/datasets/backgrounds_MC_ttbar_2017.json",
-                  f"{localdir}/datasets/DATA_SingleEle_2017.json",
-                  f"{localdir}/datasets/DATA_SingleEle_2018.json",
+                  f"{localdir}/datasets/DATA_SingleEle.json",
+                  f"{localdir}/datasets/DATA_SingleEle.json"
                     ],
         "filter" : {
             "samples": ["TTToSemiLeptonic","DATA_SingleEle","DATA_SingleEle"],
@@ -112,7 +111,7 @@ cfg = Configurator(
             "TTToSemiLeptonic__=1b" :{ "inclusive":  [ColOut("JetGood",["pt","eta","phi"])]},
             "TTToSemiLeptonic__=2b":{ "inclusive":  [ColOut("BJetGood",["pt","eta","phi"])]},
                 
-        }
+        },
     }
     
 )
@@ -121,7 +120,11 @@ cfg = Configurator(
 
 
 run_options = {
+<<<<<<< HEAD
         "executor"       : "dask/lxplus",
+=======
+        "executor"       : "dask/slurm",
+>>>>>>> official/main
         "env"            : "singularity",
         "workers"        : 1,
         "scaleout"       : 50,
