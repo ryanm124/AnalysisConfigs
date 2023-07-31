@@ -33,13 +33,6 @@ cfg = Configurator(
             "samples": ["TTbbDiLeptonic"],
             "samples_exclude" : [],
             "year": ['2018']
-        },
-        "subsamples":{
-            "TTToSemiLeptonic": {
-                "=1b":  [get_nBtagEq(1, coll="Jet")],
-                "=2b" : [get_nBtagEq(2, coll="Jet")],
-                ">2b" : [get_nBtagMin(3, coll="Jet")]
-            }
         }
     },
 
@@ -72,17 +65,7 @@ cfg = Configurator(
                           "sf_mu_id","sf_mu_iso",
                           "sf_btag", "sf_jet_puId", 
                           ],
-            "bycategory" : {
-               
-            }
-        },
-        "bysample": {
-             
-             
-             
-             
-                
-            
+         
         }
     },
 
