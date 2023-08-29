@@ -1,0 +1,80 @@
+{
+
+    
+    "DATA_EleMu": {
+        "sample": "DATA_EleMu",
+        "json_output": "datasets/DATA_EleMu.json",
+        "files": [
+            {
+                "das_names": [
+                    "/EleMu/Run2018A-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": false,
+                    "primaryDataset": "EleMu",
+                    "era": "A"
+                },
+                "das_parents_names": [
+                    "/EleMu/Run2018A-UL2018_MiniAODv2-v3/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/EleMu/Run2018B-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": false,
+                    "primaryDataset": "EleMu",
+                    "era": "B"
+                },
+                "das_parents_names": [
+                    "/EleMu/Run2018B-UL2018_MiniAODv2-v2/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/EleMu/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": false,
+                    "primaryDataset": "EleMu",
+                    "era": "C"
+                },
+                "das_parents_names": [
+                    "/EleMu/Run2018C-UL2018_MiniAODv2-v2/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/EleMu/Run2018D-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2018",
+                    "isMC": false,
+                    "primaryDataset": "EleMu",
+                    "era": "D"
+                },
+                "das_parents_names": [
+                    "/EleMu/Run2018D-UL2018_MiniAODv2-v3/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/EleMu/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2017",
+                    "isMC": false,
+                    "primaryDataset": "EleMu",
+                    "era": "B"
+                },
+                "das_parents_names": [
+                    "/EleMu/Run2017B-UL2017_MiniAODv2-v1/MINIAOD"
+                ]
+            }
+        ]
+    }
+}
