@@ -11,7 +11,7 @@ from pocket_coffea.lib.objects import (
     bbtagging,
     get_dilepton,
 )
-
+import numpy
 
 class ttHbbBaseProcessor(BaseProcessorABC):
     def __init__(self, cfg: Configurator):
@@ -45,7 +45,7 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["FatJetGood"], self.jetGoodMask = jet_selection(
             self.events, "FatJet", self.params, "LeptonGood"
         )
-
+        
         self.events["JetGood"], self.jetGoodMask = jet_selection(
             self.events, "Jet", self.params, "LeptonGood"
         )
@@ -94,6 +94,11 @@ class ttHbbBaseProcessor(BaseProcessorABC):
             self.events["nJetGoodBFlavour"] = ak.sum(
                 self.events.JetGood.hadronFlavour == 5, axis=1
             )
+
+    def process_extra_after_presel(self, variation, collection):
+        jets = self.events[collection]
+        jets["rhoQCD"] = 2*numpy.log(jets.msoftdrop/jets.pt)
+        return jets
 
     def fill_histograms_extra(self, variation):
         '''
