@@ -1,13 +1,13 @@
 {
 
     
-    "DATA_EGamma": {
-        "sample": "DATA_EGamma",
+    "EGamma": {
+        "sample": "EGamma",
         "json_output": "datasets/DATA_EGamma.json",
         "files": [
             {
                 "das_names": [
-                    "/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                    "/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
@@ -21,7 +21,7 @@
             },
             {
                 "das_names": [
-                    "/EGamma/Run2018B-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                    "/EGamma/Run2018B-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
@@ -35,7 +35,7 @@
             },
             {
                 "das_names": [
-                    "/EGamma/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                    "/EGamma/Run2018C-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
@@ -60,21 +60,9 @@
                 "das_parents_names": [
                     "/EGamma/Run2018D-UL2018_MiniAODv2-v3/MINIAOD"
                 ]
-            },
-            {
-                "das_names": [
-                    "/EGamma/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD"
-                ],
-                "metadata": {
-                    "year": "2017",
-                    "isMC": false,
-                    "primaryDataset": "EGamma",
-                    "era": "B"
-                },
-                "das_parents_names": [
-                    "/EGamma/Run2017B-UL2017_MiniAODv2-v1/MINIAOD"
-                ]
             }
+            
+
         ]
     }
 }
