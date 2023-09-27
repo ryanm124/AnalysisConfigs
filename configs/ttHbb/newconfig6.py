@@ -35,10 +35,9 @@ cfg = Configurator(
     parameters = parameters,
     datasets = {
         "jsons": [                  f"{localdir}/datasets/DATA_SingleMuon_redirector.json",
-                  f"{localdir}/datasets/DATA_EGamma.json",
-                  f"{localdir}/datasets/DATA_EleMu.json"      ],
+                            ],
         "filter" : {
-            "samples": ["DATA_SingleMuon", "DATA_EGamma", "DATA_EleMu" ],
+            "samples": ["DATA_SingleMuon" ],
             "samples_exclude" : [],
             "year": ['2018']
         } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2018.json",
@@ -50,7 +49,7 @@ cfg = Configurator(
     # Skimming and categorization
     skim = [
              get_nObj_min(1, 200., "FatJet"),
-             get_HLTsel(primaryDatasets=["DoubleEle","EleMu","DoubleMu"])
+             get_HLTsel(primaryDatasets=["EleMu","DoubleMu"])
              ],
              
     preselections = [dilepton_presel,

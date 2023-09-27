@@ -7,6 +7,7 @@ from pocket_coffea.lib.columns_manager import ColOut
 import os
 import workflow
 from workflow import ttHbbBaseProcessor 
+
 # importing custom cut functions
 import custom_cut_functions
 from  custom_cut_functions import *
@@ -20,49 +21,28 @@ from pocket_coffea.parameters import defaults
 default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir+"/params")
 
-# gets reset by command line option in runner.py script
-#CONFIG_DATASET = "WJetsToLNu_HT-200To400_2018"
-#from scripts.runner import CONFIG_DATASET
-#print(CONFIG_DATASET)
-
-import argparse
-
-# Create an ArgumentParser to handle command-line arguments
-parser = argparse.ArgumentParser(description="My Configuration")
-
-# Add a command-line argument to accept the dataset value
-parser.add_argument('--dataset', type=str, help='Dataset name')
-
-# Parse the command-line arguments
-args = parser.parse_args()
-
-# Set CONFIG_DATASET based on the command-line argument
-CONFIG_DATASET = args.dataset
-
-
 # merging additional analysis specific parameters
 parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   f"{localdir}/params/object_preselection.yaml",
                                                   f"{localdir}/params/triggers.yaml",
                                                   update=True)
+#sampleFilename = "DATA_SingleMuon_redirector.json"
+#sampleName = "SingleMuon"
 
 # Configurator instance
-#                  #f"{localdir}/datasets/DYJetsToLL_M-50_2018.json",                                                                               
+#                  #f"{localdir}/datasets/DYJetsToLL_M-50_2018.json",#f"{localdir}/datasets/DATA_SingleMuon.json"                                                                               
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [f"{localdir}/datasets/{CONFIG_DATASET}.json",
-               ],
+        "jsons": [ f"{localdir}/datasets/DATA_EGamma.json"
+
+      ],
         "filter" : {
-            "samples": [ f"{CONFIG_DATASET[:-5]}" ],
+            "samples": ["DATA_EGamma" ],
             "samples_exclude" : [],
-            "year": [f'{CONFIG_DATASET[-4:]}']
+            "year": ['2018']
         } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2018.json",
     },
-
-    #print( f"{localdir}/datasets/{CONFIG_DATASET}.json")
-    #print(f"{CONFIG_DATASET[:-5]}")
-    #print(f"{CONFIG_DATASET[-4:]}")
 
     workflow = ttHbbBaseProcessor,
     workflow_options = {},
@@ -70,7 +50,7 @@ cfg = Configurator(
     # Skimming and categorization
     skim = [
              get_nObj_min(1, 200., "FatJet"),
-             get_HLTsel(primaryDatasets=["DoubleEle","EleMu","DoubleMu"])
+             get_HLTsel(primaryDatasets=["DoubleEle","EleMu"])
              ],
              
     preselections = [dilepton_presel,
