@@ -30,21 +30,25 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 #sampleName = "SingleMuon"
 
 # Configurator instance
-#                  #f"{localdir}/datasets/DYJetsToLL_M-50_2018.json",#f"{localdir}/datasets/DATA_SingleMuon.json"                                                                               
+#                  #f"{localdir}/datasets/DYJetsToLL_M-50_2016.json",#f"{localdir}/datasets/DATA_SingleMuon.json"                                                                               
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [
-                  f"{localdir}/datasets/WW_2018.json",
-                  f"{localdir}/datasets/WZ_2018.json",
-                  f"{localdir}/datasets/ZZ_2018.json",
-                 ], 
+        "jsons": [                  f"{localdir}/datasets/ST_s-channel_4f_leptonDecays_2016.json",
+                  f"{localdir}/datasets/ST_t-channel_antitop_4f_InclusiveDecays_2016.json",
+                  f"{localdir}/datasets/ST_t-channel_top_4f_InclusiveDecays_2016.json",
+                  f"{localdir}/datasets/ST_tW_antitop_5f_inclusiveDecays_2016.json",
+                  f"{localdir}/datasets/ST_tW_top_5f_inclusiveDecays_2016.json",
+                  f"{localdir}/datasets/WJetsToQQ_HT400to600_2016.json",
+                  f"{localdir}/datasets/WJetsToQQ_HT600to800_2016.json",
+                  f"{localdir}/datasets/WJetsToQQ_HT800toInf_2016.json"
                   
+                  ],
         "filter" : {
-            "samples": [  "WW", "WZ", "ZZ" ],
+            "samples": ["ST_s-channel_4f_leptonDecays","ST_t-channel_antitop_4f_InclusiveDecays","ST_t-channel_top_4f_InclusiveDecays","ST_tW_antitop_5f_inclusiveDecays","ST_tW_top_5f_inclusiveDecays","WJetsToQQ_HT400to600","WJetsToQQ_HT600to800","WJetsToQQ_HT800toInf" ],
             "samples_exclude" : [],
-            "year": ['2018']
-        } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2018.json",
+            "year": ['2016']
+        } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2016.json",
     },
 
     workflow = ttHbbBaseProcessor,

@@ -30,21 +30,17 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 #sampleName = "SingleMuon"
 
 # Configurator instance
-#                  #f"{localdir}/datasets/DYJetsToLL_M-50_2018.json",#f"{localdir}/datasets/DATA_SingleMuon.json"                                                                               
+#                  #f"{localdir}/datasets/DYJetsToLL_M-50_2017.json",#f"{localdir}/datasets/DATA_SingleMuon.json"                                                                               
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [
-                  f"{localdir}/datasets/WW_2018.json",
-                  f"{localdir}/datasets/WZ_2018.json",
-                  f"{localdir}/datasets/ZZ_2018.json",
-                 ], 
-                  
+        "jsons": [ f"{localdir}/datasets/DATA_EleMu_redirector.json"
+      ],
         "filter" : {
-            "samples": [  "WW", "WZ", "ZZ" ],
+            "samples": ["DATA_EleMu" ],
             "samples_exclude" : [],
-            "year": ['2018']
-        } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2018.json",
+            "year": ['2017']
+        } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2017.json",
     },
 
     workflow = ttHbbBaseProcessor,
@@ -53,7 +49,7 @@ cfg = Configurator(
     # Skimming and categorization
     skim = [
              get_nObj_min(1, 200., "FatJet"),
-             get_HLTsel(primaryDatasets=["DoubleEle","EleMu","DoubleMu"])
+             get_HLTsel(primaryDatasets=["EleMu"])
              ],
              
     preselections = [dilepton_presel,

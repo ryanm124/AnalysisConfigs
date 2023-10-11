@@ -1,0 +1,112 @@
+{
+
+
+    
+    "DATA_SingleMuon": {
+        "sample": "DATA_SingleMuon",
+        "json_output": "datasets/DATA_SingleMuon_2017.json",
+        "files": [
+            {
+                "das_names": [
+                    "/SingleMuon/Run2017B-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2017",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "B"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2017A-UL2017_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleMuon/Run2017C-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2017",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "C"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2017B-UL2017_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleMuon/Run2017D-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2017",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "D"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2017C-UL2017_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleMuon/Run2017E-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2017",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "E"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2017D-UL2017_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleMuon/Run2017F-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2017",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "F"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2017D-UL2017_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleMuon/Run2017G-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2017",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "G"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2017D-UL2017_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleMuon/Run2017H-UL2017_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2017",
+                    "isMC": false,
+                    "primaryDataset": "SingleMuon",
+                    "era": "H"
+                },
+                "das_parents_names": [
+                    "/SingleMuon/Run2017D-UL2017_MiniAODv2-v1/MINIAOD"
+                ]
+            }
+
+           
+    ]                 
+        
+    }
+}

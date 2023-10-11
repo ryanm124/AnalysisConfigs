@@ -1,0 +1,126 @@
+{
+
+
+    
+    "DATA_EGamma": {
+        "sample": "DATA_EGamma",
+        "json_output": "datasets/DATA_EGamma.json",
+        "files": [
+            {
+                "das_names": [
+                    "/SingleElectron/Run2016B-ver1_HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2016",
+                    "isMC": false,
+                    "primaryDataset": "SingleElectron",
+                    "era": "B"
+                }
+            },
+            {
+                "das_names": [
+                    "/SingleElectron/Run2016C-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2016",
+                    "isMC": false,
+                    "primaryDataset": "SingleElectron",
+                    "era": "C"
+                },
+                "das_parents_names": [
+                    "/EGamma/Run2016B-UL2016_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleElectron/Run2016D-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2016",
+                    "isMC": false,
+                    "primaryDataset": "SingleElectron",
+                    "era": "D"
+                },
+                "das_parents_names": [
+                    "/EGamma/Run2016C-UL2016_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleElectron/Run2016E-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2016",
+                    "isMC": false,
+                    "primaryDataset": "SingleElectron",
+                    "era": "E"
+                },
+                "das_parents_names": [
+                    "/EGamma/Run2016D-UL2016_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+
+
+
+            {
+                "das_names": [
+                    "/SingleElectron/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v2/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2016",
+                    "isMC": false,
+                    "primaryDataset": "SingleElectron",
+                    "era": "F"
+                },
+                "das_parents_names": [
+                    "/EGamma/Run2016D-UL2016_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleElectron/Run2016F-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2016",
+                    "isMC": false,
+                    "primaryDataset": "SingleElectron",
+                    "era": "F"
+                },
+                "das_parents_names": [
+                    "/EGamma/Run2016D-UL2016_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleElectron/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2016",
+                    "isMC": false,
+                    "primaryDataset": "SingleElectron",
+                    "era": "G"
+                },
+                "das_parents_names": [
+                    "/EGamma/Run2016D-UL2016_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+            {
+                "das_names": [
+                    "/SingleElectron/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                ],
+                "metadata": {
+                    "year": "2016",
+                    "isMC": false,
+                    "primaryDataset": "SingleElectron",
+                    "era": "H"
+                },
+                "das_parents_names": [
+                    "/EGamma/Run2016D-UL2016_MiniAODv2-v1/MINIAOD"
+                ]
+            },
+
+           
+    ]                 
+        
+    }
+}

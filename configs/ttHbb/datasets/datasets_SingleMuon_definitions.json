@@ -2,64 +2,64 @@
 
 
     
-    "DATA_EGamma": {
-        "sample": "DATA_EGamma",
-        "json_output": "datasets/DATA_EGamma.json",
+    "DATA_SingleMuon": {
+        "sample": "DATA_SingleMuon",
+        "json_output": "datasets/DATA_SingleMuon.json",
         "files": [
             {
                 "das_names": [
-                    "/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                    "/SingleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
                     "isMC": false,
-                    "primaryDataset": "EGamma",
+                    "primaryDataset": "SingleMuon",
                     "era": "A"
                 },
                 "das_parents_names": [
-                    "/EGamma/Run2018A-UL2018_MiniAODv2-v1/MINIAOD"
+                    "/SingleMuon/Run2018A-UL2018_MiniAODv2-v1/MINIAOD"
                 ]
             },
             {
                 "das_names": [
-                    "/EGamma/Run2018B-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                    "/SingleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
                     "isMC": false,
-                    "primaryDataset": "EGamma",
+                    "primaryDataset": "SingleMuon",
                     "era": "B"
                 },
                 "das_parents_names": [
-                    "/EGamma/Run2018B-UL2018_MiniAODv2-v1/MINIAOD"
+                    "/SingleMuon/Run2018B-UL2018_MiniAODv2-v1/MINIAOD"
                 ]
             },
             {
                 "das_names": [
-                    "/EGamma/Run2018C-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                    "/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
                     "isMC": false,
-                    "primaryDataset": "EGamma",
+                    "primaryDataset": "SingleMuon",
                     "era": "C"
                 },
                 "das_parents_names": [
-                    "/EGamma/Run2018C-UL2018_MiniAODv2-v1/MINIAOD"
+                    "/SingleMuon/Run2018C-UL2018_MiniAODv2-v1/MINIAOD"
                 ]
             },
             {
                 "das_names": [
-                    "/EGamma/Run2018D-UL2018_MiniAODv2_NanoAODv9-v3/NANOAOD"
+                    "/SingleMuon/Run2018D-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
                     "isMC": false,
-                    "primaryDataset": "EGamma",
+                    "primaryDataset": "SingleMuon",
                     "era": "D"
                 },
                 "das_parents_names": [
-                    "/EGamma/Run2018D-UL2018_MiniAODv2-v1/MINIAOD"
+                    "/SingleMuon/Run2018D-UL2018_MiniAODv2-v1/MINIAOD"
                 ]
             }
            

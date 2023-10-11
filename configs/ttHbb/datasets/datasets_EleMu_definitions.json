@@ -2,64 +2,64 @@
 
 
     
-    "DATA_EGamma": {
-        "sample": "DATA_EGamma",
-        "json_output": "datasets/DATA_EGamma.json",
+    "DATA_MuonEG": {
+        "sample": "DATA_MuonEG",
+        "json_output": "datasets/DATA_MuonEG.json",
         "files": [
             {
                 "das_names": [
-                    "/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                    "/MuonEG/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
                     "isMC": false,
-                    "primaryDataset": "EGamma",
+                    "primaryDataset": "MuonEG",
                     "era": "A"
                 },
                 "das_parents_names": [
-                    "/EGamma/Run2018A-UL2018_MiniAODv2-v1/MINIAOD"
+                    "/MuonEG/Run2018A-UL2018_MiniAODv2-v1/MINIAOD"
                 ]
             },
             {
                 "das_names": [
-                    "/EGamma/Run2018B-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                    "/MuonEG/Run2018B-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
                     "isMC": false,
-                    "primaryDataset": "EGamma",
+                    "primaryDataset": "MuonEG",
                     "era": "B"
                 },
                 "das_parents_names": [
-                    "/EGamma/Run2018B-UL2018_MiniAODv2-v1/MINIAOD"
+                    "/MuonEG/Run2018B-UL2018_MiniAODv2-v1/MINIAOD"
                 ]
             },
             {
                 "das_names": [
-                    "/EGamma/Run2018C-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+                    "/MuonEG/Run2018C-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
                     "isMC": false,
-                    "primaryDataset": "EGamma",
+                    "primaryDataset": "MuonEG",
                     "era": "C"
                 },
                 "das_parents_names": [
-                    "/EGamma/Run2018C-UL2018_MiniAODv2-v1/MINIAOD"
+                    "/MuonEG/Run2018C-UL2018_MiniAODv2-v1/MINIAOD"
                 ]
             },
             {
                 "das_names": [
-                    "/EGamma/Run2018D-UL2018_MiniAODv2_NanoAODv9-v3/NANOAOD"
+                    "/MuonEG/Run2018D-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
                 ],
                 "metadata": {
                     "year": "2018",
                     "isMC": false,
-                    "primaryDataset": "EGamma",
+                    "primaryDataset": "MuonEG",
                     "era": "D"
                 },
                 "das_parents_names": [
-                    "/EGamma/Run2018D-UL2018_MiniAODv2-v1/MINIAOD"
+                    "/MuonEG/Run2018D-UL2018_MiniAODv2-v1/MINIAOD"
                 ]
             }
            

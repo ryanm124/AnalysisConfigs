@@ -30,21 +30,25 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 #sampleName = "SingleMuon"
 
 # Configurator instance
-#                  #f"{localdir}/datasets/DYJetsToLL_M-50_2018.json",#f"{localdir}/datasets/DATA_SingleMuon.json"                                                                               
+#                  #f"{localdir}/datasets/DYJetsToLL_M-50_2017.json",#f"{localdir}/datasets/DATA_SingleMuon.json"                                                                               
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [
-                  f"{localdir}/datasets/WW_2018.json",
-                  f"{localdir}/datasets/WZ_2018.json",
-                  f"{localdir}/datasets/ZZ_2018.json",
-                 ], 
+        "jsons": [                  f"{localdir}/datasets/ST_s-channel_4f_leptonDecays_2017.json",
+                  f"{localdir}/datasets/ST_t-channel_antitop_4f_InclusiveDecays_2017.json",
+                  f"{localdir}/datasets/ST_t-channel_top_4f_InclusiveDecays_2017.json",
+                  f"{localdir}/datasets/ST_tW_antitop_5f_inclusiveDecays_2017.json",
+                  f"{localdir}/datasets/ST_tW_top_5f_inclusiveDecays_2017.json",
+                  f"{localdir}/datasets/WJetsToQQ_HT400to600_2017.json",
+                  f"{localdir}/datasets/WJetsToQQ_HT600to800_2017.json",
+                  f"{localdir}/datasets/WJetsToQQ_HT800toInf_2017.json"
                   
+                  ],
         "filter" : {
-            "samples": [  "WW", "WZ", "ZZ" ],
+            "samples": ["ST_s-channel_4f_leptonDecays","ST_t-channel_antitop_4f_InclusiveDecays","ST_t-channel_top_4f_InclusiveDecays","ST_tW_antitop_5f_inclusiveDecays","ST_tW_top_5f_inclusiveDecays","WJetsToQQ_HT400to600","WJetsToQQ_HT600to800","WJetsToQQ_HT800toInf" ],
             "samples_exclude" : [],
-            "year": ['2018']
-        } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2018.json",
+            "year": ['2017']
+        } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2017.json",
     },
 
     workflow = ttHbbBaseProcessor,
@@ -173,7 +177,7 @@ cfg = Configurator(
  
  
 )
-
+# was 50 not 75
 run_options = {
         "executor"       : "dask/lxplus",
         "env"            : "singularity",
@@ -185,9 +189,9 @@ run_options = {
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,
-        "chunk"          : 400000,
+        "chunk"          : 300000,
         "retries"        : 50,
-        "treereduction"  : 20,
+        "treereduction"  : 50,
         "adapt"          : False,
         "skipbadfiles"   : 10        
     }

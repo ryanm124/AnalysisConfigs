@@ -34,8 +34,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [ f"{localdir}/datasets/DATA_EleMu.json"
-
+        "jsons": [ f"{localdir}/datasets/DATA_EleMu_redirector.json"
       ],
         "filter" : {
             "samples": ["DATA_EleMu" ],

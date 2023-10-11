@@ -34,14 +34,11 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [
-                  f"{localdir}/datasets/WW_2018.json",
-                  f"{localdir}/datasets/WZ_2018.json",
-                  f"{localdir}/datasets/ZZ_2018.json",
-                 ], 
-                  
+        "jsons": [ 
+f"{localdir}/datasets/TTTo2L2Nu_2018.json"
+  ],
         "filter" : {
-            "samples": [  "WW", "WZ", "ZZ" ],
+            "samples": [ "TTTo2L2Nu" ],
             "samples_exclude" : [],
             "year": ['2018']
         } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2018.json",
