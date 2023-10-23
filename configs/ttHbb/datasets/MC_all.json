@@ -57,7 +57,37 @@
         ]
   },
 
-   "THW":{
+    "TTbbSemiLeptonic_Powheg":{
+        "sample": "TTbbSemiLeptonic_Powheg",
+        "json_output"    : "datasets/TTbbSemiLeptonic_Powheg_2018.json",
+        "files":[
+            { "das_names": ["/TTbb_4f_TTToSemiLeptonic_TuneCP5-Powheg-Openloops-Pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+              "metadata": {
+                  "year":"2018",
+                  "isMC": true,
+                  "xsec":  831.76,
+                  "part": "" 
+              }
+            }
+        ]
+    },
+
+    "TTbbHadronic_Powheg":{
+        "sample": "TTbbHadronic_Powheg",
+        "json_output"    : "datasets/TTbbHadronic_Powheg_2018.json",
+        "files":[
+            { "das_names": ["/TTbb_4f_TTToHadronic_TuneCP5-Powheg-Openloops-Pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+              "metadata": {
+                  "year":"2018",
+                  "isMC": true,
+                  "xsec":  831.76,
+                  "part": "" 
+                  }
+            }
+        ]
+    },
+    
+    "THW":{
         "sample": "THW",
         "json_output"    : "datasets/THW_2018.json",
         "files":[
@@ -65,7 +95,7 @@
               "metadata": {
                   "year":"2018",
                   "isMC": true,
-		          "xsec":  0.01517,
+		  "xsec":  0.01517,
                   "part": "" 
                   }
             }
