@@ -42,8 +42,25 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         )
         self.events["LeptonGood"] = leptons[ak.argsort(leptons.pt, ascending=False)]
 
+
         self.events["FatJetGood"], self.jetGoodMask = jet_selection(
             self.events, "FatJet", self.params, "LeptonGood"
+        )
+
+        isOld = False
+        if ("v7" in self._dataset  ):
+            isOld = True
+        print(len(self.events["FatJetGood"]))    
+        print("len(self.events[FatJetGood])")    
+        
+        self.events["BBFatJetGoodT"] = bbtagging(
+        self.events["FatJetGood"], self.params.btagging.working_point[self._year], "T", isOld
+        )
+        self.events["BBFatJetGoodM"] = bbtagging(
+        self.events["FatJetGood"], self.params.btagging.working_point[self._year], "M", isOld
+        )
+        self.events["BBFatJetGoodL"] = bbtagging(
+        self.events["FatJetGood"], self.params.btagging.working_point[self._year], "L", isOld
         )
         
         self.events["JetGood"], self.jetGoodMask = jet_selection(
@@ -52,19 +69,20 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["BJetGood"] = btagging(
             self.events["JetGood"], self.params.btagging.working_point[self._year]
         )
-        isOld = False
-        if "v7" in self._dataset:
-            isOld = True
-        
-        self.events["BBFatJetGoodT"] = bbtagging(
-            self.events["FatJetGood"], self.params.btagging.working_point[self._year], "T", isOld
-        )
-        self.events["BBFatJetGoodM"] = bbtagging(
-            self.events["FatJetGood"], self.params.btagging.working_point[self._year], "M", isOld
-        )
-        self.events["BBFatJetGoodL"] = bbtagging(
-            self.events["FatJetGood"], self.params.btagging.working_point[self._year], "L", isOld
-        )
+
+        # to fix the errrors when running the dilepton MC
+        #if len(self.events["FatJetGood"]) > 0 :
+        #if self.params.btagging.working_point[self._year] in self.events["FatJetGood"]:
+        #    if len(bbtagging( self.events["FatJetGood"], self.params.btagging.working_point[self._year], "T", isOld  )) > 0:
+        #if "FatJet_"+self.params.btagging.working_point[self._year] in self.events :
+
+        #else:
+        #    self.events["BBFatJetGoodT"] =  None
+        #    self.events["BBFatJetGoodM"] =  None
+        #    self.events["BBFatJetGoodL"] =  None
+
+
+
         self.events["ll"] = get_dilepton(
             self.events.ElectronGood, self.events.MuonGood
         )
@@ -79,10 +97,14 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["nJetGood"] = ak.num(self.events.JetGood)
         self.events["nBJetGood"] = ak.num(self.events.BJetGood)
         self.events["nfatjet"]   = ak.num(self.events.FatJetGood)
+        #if self.params.btagging.working_point[self._year] in self.events["FatJetGood"]:
         self.events["nBBFatJetGoodT"]   = ak.num(self.events.BBFatJetGoodT)
         self.events["nBBFatJetGoodM"]   = ak.num(self.events.BBFatJetGoodM)
         self.events["nBBFatJetGoodL"]   = ak.num(self.events.BBFatJetGoodL)
-        
+        #else:    
+        #    self.events["nBBFatJetGoodT"]   = ak.num(0)
+        #    self.events["nBBFatJetGoodM"]   = ak.num(0)
+        #    self.events["nBBFatJetGoodL"]   = ak.num(0)       
 
     # Function that defines common variables employed in analyses and save them as attributes of `events`
     def define_common_variables_before_presel(self, variation):
@@ -96,6 +118,7 @@ class ttHbbBaseProcessor(BaseProcessorABC):
             )
 
     def process_extra_after_presel(self, variation, collection):
+
         jets = self.events[collection]
         jets["rhoQCD"] = 2*numpy.log(jets.msoftdrop/jets.pt)
         return jets
