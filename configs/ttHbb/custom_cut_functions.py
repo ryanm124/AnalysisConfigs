@@ -33,7 +33,7 @@ dilepton_presel = Cut(
         "njet": 2,
         "nbjet": 0,
         "pt_leading_lepton": 15,
-        "met": 10,
+        "met": 40,
     },
     function=dilepton,
 )
