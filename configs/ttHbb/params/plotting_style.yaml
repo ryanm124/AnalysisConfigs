@@ -25,7 +25,7 @@ plotting_style:
        - WJetsToQQ_HT400to600
        - WJetsToQQ_HT600to800
        - WJetsToQQ_HT800toInf
-      DYJetsToLL_M-50:
+     DYJetsToLL_M-50:
        - ZJetsToQQ_HT400to600
        - ZJetsToQQ_HT600to800
        - ZJetsToQQ_HT800toInf
