@@ -25,6 +25,7 @@ plotting_style:
        - WJetsToQQ_HT400to600
        - WJetsToQQ_HT600to800
        - WJetsToQQ_HT800toInf
+      DYJetsToLL_M-50:
        - ZJetsToQQ_HT400to600
        - ZJetsToQQ_HT600to800
        - ZJetsToQQ_HT800toInf
@@ -50,7 +51,8 @@ plotting_style:
       ttHToNonbb: "ttHToNonbb"
       TTTo2L2Nu : "$t\\bar{t}$ Dilepton"
       QCD_HT500to700 : "QCD"
-      WJetsToQQ_HT400to600 : "W/Z/DY plus Jets"
+      WJetsToQQ_HT400to600 : "W plus Jets"
+      DYJetsToLL_M-50 : "Z/DY plus Jets"
       WW : "Dibosons"
       ST_s-channel_4f_leptonDecays : "Single Top"
       TTZToQQ : "$t\\bar{t}$ plus W/Z/G"
