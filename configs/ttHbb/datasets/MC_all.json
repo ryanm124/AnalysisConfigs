@@ -22,8 +22,8 @@
     },
 
 
-    "ttHToNonbb_Powheg": {
-	"sample": "ttHToNonbb",
+    "ttHToNonbb": {
+	"sample": "TTHtoNonbbandTHW",
 	"json_output": "datasets/TTHtoNonbb_2018.json",
 	"files": [
 	        {
@@ -57,6 +57,7 @@
         ]
   },
 
+<<<<<<< Updated upstream
     "TTbbSemiLeptonic_Powheg":{
         "sample": "TTbbSemiLeptonic_Powheg",
         "json_output"    : "datasets/TTbbSemiLeptonic_Powheg_2018.json",

@@ -45,6 +45,7 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         )
         self.events["LeptonGood"] = leptons[ak.argsort(leptons.pt, ascending=False)]
 
+
         self.events["FatJetGood"], self.jetGoodMask = jet_selection(
             self.events, "FatJet", self.params, "LeptonGood"
         )
@@ -68,19 +69,31 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["BJetGood"] = btagging(
             self.events["JetGood"], self.params.btagging.working_point[self._year]
         )
+
         isOld = False
-        if "v7" in self._dataset:
+        if ("v7" in self._dataset  ):
             isOld = True
         
         self.events["BBFatJetGoodT"] = bbtagging(
-            self.events["FatJetGood"], self.params.btagging.working_point[self._year], "T", isOld
+        self.events["FatJetGood"], self.params.btagging.working_point[self._year], "T", isOld
         )
         self.events["BBFatJetGoodM"] = bbtagging(
-            self.events["FatJetGood"], self.params.btagging.working_point[self._year], "M", isOld
+        self.events["FatJetGood"], self.params.btagging.working_point[self._year], "M", isOld
         )
         self.events["BBFatJetGoodL"] = bbtagging(
-            self.events["FatJetGood"], self.params.btagging.working_point[self._year], "L", isOld
+        self.events["FatJetGood"], self.params.btagging.working_point[self._year], "L", isOld
         )
+
+        # to fix the errrors when running the dilepton MC
+        #if len(self.events["FatJetGood"]) > 0 :
+        #if self.params.btagging.working_point[self._year] in self.events["FatJetGood"]:
+        #    if len(bbtagging( self.events["FatJetGood"], self.params.btagging.working_point[self._year], "T", isOld  )) > 0:
+        #if "FatJet_"+self.params.btagging.working_point[self._year] in self.events :
+
+        #else:
+        #    self.events["BBFatJetGoodT"] =  None
+        #    self.events["BBFatJetGoodM"] =  None
+        #    self.events["BBFatJetGoodL"] =  None
 
         self.events["ll"] = get_dilepton(
             self.events.ElectronGood, self.events.MuonGood
@@ -96,10 +109,14 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["nJetGood"] = ak.num(self.events.JetGood)
         self.events["nBJetGood"] = ak.num(self.events.BJetGood)
         self.events["nfatjet"]   = ak.num(self.events.FatJetGood)
+        #if self.params.btagging.working_point[self._year] in self.events["FatJetGood"]:
         self.events["nBBFatJetGoodT"]   = ak.num(self.events.BBFatJetGoodT)
         self.events["nBBFatJetGoodM"]   = ak.num(self.events.BBFatJetGoodM)
         self.events["nBBFatJetGoodL"]   = ak.num(self.events.BBFatJetGoodL)
-        
+        #else:    
+        #    self.events["nBBFatJetGoodT"]   = ak.num(0)
+        #    self.events["nBBFatJetGoodM"]   = ak.num(0)
+        #    self.events["nBBFatJetGoodL"]   = ak.num(0)       
 
     # Function that defines common variables employed in analyses and save them as attributes of `events`
     def define_common_variables_before_presel(self, variation):
@@ -114,33 +131,29 @@ class ttHbbBaseProcessor(BaseProcessorABC):
 
     def process_extra_after_presel(self, variation):
 
-        setup_logging(console_log_output="stdout", console_log_level="INFO", console_log_color=True,
-                      logfile_file="/afs/cern.ch/user/r/rmccarth/private/ttH/plotUpdate/PocketCoffea/AnalysisConfigs/configs/ttHbb/printout.log", logfile_log_level="info", logfile_log_color=False,
-                      log_line_template="%(color_on)s[%(levelname)-8s] %(message)s%(color_off)s")
-
         self.events["FatJetGood"]["rhoQCD"] = 2*numpy.log(self.events["FatJetGood"].msoftdrop/self.events["FatJetGood"].pt)
         self.events["BBFatJetGoodT"]["rhoQCD"] = 2*numpy.log(self.events["BBFatJetGoodT"].msoftdrop/self.events["BBFatJetGoodT"].pt)
         self.events["BBFatJetGoodM"]["rhoQCD"] = 2*numpy.log(self.events["BBFatJetGoodM"].msoftdrop/self.events["BBFatJetGoodM"].pt)
         self.events["BBFatJetGoodL"]["rhoQCD"] = 2*numpy.log(self.events["BBFatJetGoodL"].msoftdrop/self.events["BBFatJetGoodL"].pt)
-        logging.info("LHE: {}".format(self.events.LHEPart.pdgId[0]))
-        logging.info("LHE length: {}".format(len(self.events.LHEPart.pdgId)))
+        #logging.info("LHE: {}".format(self.events.LHEPart.pdgId[0]))
+        #logging.info("LHE length: {}".format(len(self.events.LHEPart.pdgId)))
         isOutgoing = self.events.LHEPart.status == 1
         isParton = (abs(self.events.LHEPart.pdgId) < 6) | (
             self.events.LHEPart.pdgId == 21
         )
         quarks = self.events.LHEPart[isOutgoing & isParton]
-        logging.info("isOutgoing: {}".format(isOutgoing[0]))
-        logging.info("isParton: {}".format(isParton[0]))
-        logging.info("LHE outoing: {}".format(quarks.pdgId[0]))
+        #logging.info("isOutgoing: {}".format(isOutgoing[0]))
+        #logging.info("isParton: {}".format(isParton[0]))
+        #logging.info("LHE outoing: {}".format(quarks.pdgId[0]))
         
         tops = self.events.GenPart[
             ((self.events.GenPart.pdgId == 6) | (self.events.GenPart.pdgId == -6))
             & (self.events.GenPart.hasFlags(['fromHardProcess']))
         ]
-        logging.info("tops {}".format(tops.pdgId[0]))
+        #logging.info("tops {}".format(tops.pdgId[0]))
         onlytops = tops[tops.pdgId==6]
         genPartFromRad = onlytops.parent
-        logging.info("top parents {}".format(genPartFromRad.pdgId[0]))
+        #logging.info("top parents {}".format(genPartFromRad.pdgId[0]))
         genPartFromRad = genPartFromRad.children
         genPartFromRad = genPartFromRad[((genPartFromRad.pdgId!=6) & (genPartFromRad.pdgId!=-6))]
         genPartFromRad = ak.flatten(genPartFromRad,axis=2)
@@ -150,33 +163,33 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         genPartFromRad = genPartFromRad[genPartFromRad.pdgId!=25]
         genPartFromRad = ak.concatenate((higgsProducts,genPartFromRad),axis=1)
         genPartFromRad = ak.with_field(genPartFromRad,0,"from_top")
-        logging.info("genPartFromRad {}".format(genPartFromRad.pdgId[0]))
+        #logging.info("genPartFromRad {}".format(genPartFromRad.pdgId[0]))
         tops = tops[tops.hasFlags("isLastCopy")]
         children = tops.children
-        logging.info("children: {}".format(children.pdgId[0]))
+        #logging.info("children: {}".format(children.pdgId[0]))
         children = children[(children.pdgId!=6) & (children.pdgId!=-6)]
         children = ak.flatten(children,axis=2)
         genPartFromTop = children[(abs(children.pdgId)<6) | (children.pdgId==21)]
-        logging.info("genPartFromTop before loop {}".format(genPartFromTop.pdgId[0]))
+        #logging.info("genPartFromTop before loop {}".format(genPartFromTop.pdgId[0]))
         children = children[(abs(children.pdgId)>6) & (children.pdgId!=21) & ((abs(children.pdgId)<11) | (abs(children.pdgId)>18))]
-        logging.info("children before loop: {}".format(children.pdgId[0]))
+        #logging.info("children before loop: {}".format(children.pdgId[0]))
         #while(len(ak.flatten(children,axis=1))):
         children = children.distinctChildrenDeep
         children = ak.flatten(children,axis=2)
-        logging.info("children in loop: {}".format(children.pdgId))
+        #logging.info("children in loop: {}".format(children.pdgId))
         genQuarks = children[(abs(children.pdgId)<6) | (children.pdgId==21)]
         genPartFromTop = ak.concatenate((genPartFromTop,genQuarks), axis=1)
         genPartFromTop = ak.with_field(genPartFromTop, 1, "from_top")
-        logging.info("genPartFromTop {}".format(genPartFromTop.pdgId))
+        #logging.info("genPartFromTop {}".format(genPartFromTop.pdgId))
         #children = children[(abs(children.pdgId)>6) & (children.pdgId!=21) & ((abs(children.pdgId)<11) | (abs(children.pdgId)>18))]
 
         genPart = ak.concatenate((genPartFromRad,genPartFromTop), axis=1)
-        logging.info("genjetgood {}".format(self.events.GenJetGood.eta))
+        #logging.info("genjetgood {}".format(self.events.GenJetGood.eta))
         genJets = ak.concatenate((self.events.GenJetGood,self.events.GenFatJetGood), axis=1)
-        logging.info("genJets {}".format(genJets.eta))
-        logging.info("genJets isFatJet {}".format(genJets.isFatJet))
-        logging.info("genPart {}".format(genPart.pdgId[0]))
-        logging.info("genPart from top {}".format(genPart.from_top[0]))
+        #logging.info("genJets {}".format(genJets.eta))
+        #logging.info("genJets isFatJet {}".format(genJets.isFatJet))
+        #logging.info("genPart {}".format(genPart.pdgId[0]))
+        #logging.info("genPart from top {}".format(genPart.from_top[0]))
         matched_jets, jetsBQuarks, jetsCQuarks, jetsFromTop = object_matching(
             genPart, genJets, dr_min=0.1
         )
@@ -200,7 +213,6 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["GenFatJetGood"] = ak.with_field(self.events.GenFatJetGood,genFatJetsFromTop,"isFromTop")
 
         return
-
 
     def fill_histograms_extra(self, variation):
         '''
