@@ -12,6 +12,9 @@ from pocket_coffea.lib.objects import (
     get_dilepton,
 )
 import numpy
+import logging
+from pocket_coffea.utils.logging import setup_logging
+from pocket_coffea.lib.deltaR_matching import object_matching
 
 class ttHbbBaseProcessor(BaseProcessorABC):
     def __init__(self, cfg: Configurator):
@@ -49,6 +52,19 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["JetGood"], self.jetGoodMask = jet_selection(
             self.events, "Jet", self.params, "LeptonGood"
         )
+
+        self.events["GenJet"] = ak.with_field(self.events.GenJet, ak.zeros_like(self.events.GenJet.eta,dtype=int),"isFatJet")
+
+        self.events["GenJetGood"], self.jetGoodMask = jet_selection(
+            self.events, "GenJet", self.params
+        )
+
+        self.events["GenFatJet"] = ak.with_field(self.events.GenJetAK8, ak.ones_like(self.events.GenJetAK8.eta,dtype=int),"isFatJet")
+
+        self.events["GenFatJetGood"], self.jetGoodMask = jet_selection(
+            self.events, "GenFatJet", self.params
+        )
+
         self.events["BJetGood"] = btagging(
             self.events["JetGood"], self.params.btagging.working_point[self._year]
         )
@@ -65,6 +81,7 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["BBFatJetGoodL"] = bbtagging(
             self.events["FatJetGood"], self.params.btagging.working_point[self._year], "L", isOld
         )
+
         self.events["ll"] = get_dilepton(
             self.events.ElectronGood, self.events.MuonGood
         )
@@ -95,10 +112,95 @@ class ttHbbBaseProcessor(BaseProcessorABC):
                 self.events.JetGood.hadronFlavour == 5, axis=1
             )
 
-    def process_extra_after_presel(self, variation, collection):
-        jets = self.events[collection]
-        jets["rhoQCD"] = 2*numpy.log(jets.msoftdrop/jets.pt)
-        return jets
+    def process_extra_after_presel(self, variation):
+
+        setup_logging(console_log_output="stdout", console_log_level="INFO", console_log_color=True,
+                      logfile_file="/afs/cern.ch/user/r/rmccarth/private/ttH/plotUpdate/PocketCoffea/AnalysisConfigs/configs/ttHbb/printout.log", logfile_log_level="info", logfile_log_color=False,
+                      log_line_template="%(color_on)s[%(levelname)-8s] %(message)s%(color_off)s")
+
+        self.events["FatJetGood"]["rhoQCD"] = 2*numpy.log(self.events["FatJetGood"].msoftdrop/self.events["FatJetGood"].pt)
+        self.events["BBFatJetGoodT"]["rhoQCD"] = 2*numpy.log(self.events["BBFatJetGoodT"].msoftdrop/self.events["BBFatJetGoodT"].pt)
+        self.events["BBFatJetGoodM"]["rhoQCD"] = 2*numpy.log(self.events["BBFatJetGoodM"].msoftdrop/self.events["BBFatJetGoodM"].pt)
+        self.events["BBFatJetGoodL"]["rhoQCD"] = 2*numpy.log(self.events["BBFatJetGoodL"].msoftdrop/self.events["BBFatJetGoodL"].pt)
+        logging.info("LHE: {}".format(self.events.LHEPart.pdgId[0]))
+        logging.info("LHE length: {}".format(len(self.events.LHEPart.pdgId)))
+        isOutgoing = self.events.LHEPart.status == 1
+        isParton = (abs(self.events.LHEPart.pdgId) < 6) | (
+            self.events.LHEPart.pdgId == 21
+        )
+        quarks = self.events.LHEPart[isOutgoing & isParton]
+        logging.info("isOutgoing: {}".format(isOutgoing[0]))
+        logging.info("isParton: {}".format(isParton[0]))
+        logging.info("LHE outoing: {}".format(quarks.pdgId[0]))
+        
+        tops = self.events.GenPart[
+            ((self.events.GenPart.pdgId == 6) | (self.events.GenPart.pdgId == -6))
+            & (self.events.GenPart.hasFlags(['fromHardProcess']))
+        ]
+        logging.info("tops {}".format(tops.pdgId[0]))
+        onlytops = tops[tops.pdgId==6]
+        genPartFromRad = onlytops.parent
+        logging.info("top parents {}".format(genPartFromRad.pdgId[0]))
+        genPartFromRad = genPartFromRad.children
+        genPartFromRad = genPartFromRad[((genPartFromRad.pdgId!=6) & (genPartFromRad.pdgId!=-6))]
+        genPartFromRad = ak.flatten(genPartFromRad,axis=2)
+        higgsProducts = genPartFromRad[genPartFromRad.pdgId==25]
+        higgsProducts = higgsProducts.distinctChildrenDeep
+        higgsProducts = ak.flatten(higgsProducts,axis=2)
+        genPartFromRad = genPartFromRad[genPartFromRad.pdgId!=25]
+        genPartFromRad = ak.concatenate((higgsProducts,genPartFromRad),axis=1)
+        genPartFromRad = ak.with_field(genPartFromRad,0,"from_top")
+        logging.info("genPartFromRad {}".format(genPartFromRad.pdgId[0]))
+        tops = tops[tops.hasFlags("isLastCopy")]
+        children = tops.children
+        logging.info("children: {}".format(children.pdgId[0]))
+        children = children[(children.pdgId!=6) & (children.pdgId!=-6)]
+        children = ak.flatten(children,axis=2)
+        genPartFromTop = children[(abs(children.pdgId)<6) | (children.pdgId==21)]
+        logging.info("genPartFromTop before loop {}".format(genPartFromTop.pdgId[0]))
+        children = children[(abs(children.pdgId)>6) & (children.pdgId!=21) & ((abs(children.pdgId)<11) | (abs(children.pdgId)>18))]
+        logging.info("children before loop: {}".format(children.pdgId[0]))
+        #while(len(ak.flatten(children,axis=1))):
+        children = children.distinctChildrenDeep
+        children = ak.flatten(children,axis=2)
+        logging.info("children in loop: {}".format(children.pdgId))
+        genQuarks = children[(abs(children.pdgId)<6) | (children.pdgId==21)]
+        genPartFromTop = ak.concatenate((genPartFromTop,genQuarks), axis=1)
+        genPartFromTop = ak.with_field(genPartFromTop, 1, "from_top")
+        logging.info("genPartFromTop {}".format(genPartFromTop.pdgId))
+        #children = children[(abs(children.pdgId)>6) & (children.pdgId!=21) & ((abs(children.pdgId)<11) | (abs(children.pdgId)>18))]
+
+        genPart = ak.concatenate((genPartFromRad,genPartFromTop), axis=1)
+        logging.info("genjetgood {}".format(self.events.GenJetGood.eta))
+        genJets = ak.concatenate((self.events.GenJetGood,self.events.GenFatJetGood), axis=1)
+        logging.info("genJets {}".format(genJets.eta))
+        logging.info("genJets isFatJet {}".format(genJets.isFatJet))
+        logging.info("genPart {}".format(genPart.pdgId[0]))
+        logging.info("genPart from top {}".format(genPart.from_top[0]))
+        matched_jets, jetsBQuarks, jetsCQuarks, jetsFromTop = object_matching(
+            genPart, genJets, dr_min=0.1
+        )
+
+
+        jetsBQuarks = ak.Array(jetsBQuarks)
+        jetsCQuarks = ak.Array(jetsCQuarks)
+        jetsFromTop = ak.Array(jetsFromTop)
+        genJetsBQuarks = jetsBQuarks[genJets.isFatJet==0]
+        genFatJetsBQuarks = jetsBQuarks[genJets.isFatJet==1]
+        genJetsCQuarks = jetsCQuarks[genJets.isFatJet==0]
+        genFatJetsCQuarks = jetsCQuarks[genJets.isFatJet==1]
+        genJetsFromTop = jetsFromTop[genJets.isFatJet==0]
+        genFatJetsFromTop = jetsFromTop[genJets.isFatJet==1]
+        
+        self.events["GenJetGood"] = ak.with_field(self.events.GenJetGood,genJetsBQuarks,"numBQuarksMatched")
+        self.events["GenJetGood"] = ak.with_field(self.events.GenJetGood,genJetsCQuarks,"numCQuarksMatched")
+        self.events["GenJetGood"] = ak.with_field(self.events.GenJetGood,genJetsFromTop,"isFromTop")
+        self.events["GenFatJetGood"] = ak.with_field(self.events.GenFatJetGood,genFatJetsBQuarks,"numBQuarksMatched")
+        self.events["GenFatJetGood"] = ak.with_field(self.events.GenFatJetGood,genFatJetsCQuarks,"numCQuarksMatched")
+        self.events["GenFatJetGood"] = ak.with_field(self.events.GenFatJetGood,genFatJetsFromTop,"isFromTop")
+
+        return
+
 
     def fill_histograms_extra(self, variation):
         '''
