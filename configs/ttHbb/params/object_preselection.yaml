@@ -26,3 +26,11 @@ object_preselection:
     pt: 200
     eta: 2.4
     jetId: 2
+
+  GenJet:
+    pt: 20
+    eta: 2.4
+
+  GenFatJet:
+    pt: 20
+    eta: 2.4

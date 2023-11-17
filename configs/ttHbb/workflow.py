@@ -127,16 +127,18 @@ class ttHbbBaseProcessor(BaseProcessorABC):
             )
             self.events["nJetGoodBFlavour"] = ak.sum(
                 self.events.JetGood.hadronFlavour == 5, axis=1
-            )
+            ) 
 
     def process_extra_after_presel(self, variation):
 
-        self.events["FatJetGood"]["rhoQCD"] = 2*numpy.log(self.events["FatJetGood"].msoftdrop/self.events["FatJetGood"].pt)
-        self.events["BBFatJetGoodT"]["rhoQCD"] = 2*numpy.log(self.events["BBFatJetGoodT"].msoftdrop/self.events["BBFatJetGoodT"].pt)
-        self.events["BBFatJetGoodM"]["rhoQCD"] = 2*numpy.log(self.events["BBFatJetGoodM"].msoftdrop/self.events["BBFatJetGoodM"].pt)
-        self.events["BBFatJetGoodL"]["rhoQCD"] = 2*numpy.log(self.events["BBFatJetGoodL"].msoftdrop/self.events["BBFatJetGoodL"].pt)
+        self.events["FatJetGood"] = ak.with_field(self.events.FatJetGood,2*numpy.log(self.events["FatJetGood"].msoftdrop/self.events["FatJetGood"].pt),"rhoQCD")
+        self.events["BBFatJetGoodT"] = ak.with_field(self.events.BBFatJetGoodT,2*numpy.log(self.events["BBFatJetGoodT"].msoftdrop/self.events["BBFatJetGoodT"].pt),"rhoQCD")
+        self.events["BBFatJetGoodM"] = ak.with_field(self.events.BBFatJetGoodM,2*numpy.log(self.events["BBFatJetGoodM"].msoftdrop/self.events["BBFatJetGoodM"].pt),"rhoQCD")
+        self.events["BBFatJetGoodL"] = ak.with_field(self.events.BBFatJetGoodL,2*numpy.log(self.events["BBFatJetGoodL"].msoftdrop/self.events["BBFatJetGoodL"].pt),"rhoQCD")
+        
         #logging.info("LHE: {}".format(self.events.LHEPart.pdgId[0]))
         #logging.info("LHE length: {}".format(len(self.events.LHEPart.pdgId)))
+        '''
         isOutgoing = self.events.LHEPart.status == 1
         isParton = (abs(self.events.LHEPart.pdgId) < 6) | (
             self.events.LHEPart.pdgId == 21
@@ -211,7 +213,7 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["GenFatJetGood"] = ak.with_field(self.events.GenFatJetGood,genFatJetsBQuarks,"numBQuarksMatched")
         self.events["GenFatJetGood"] = ak.with_field(self.events.GenFatJetGood,genFatJetsCQuarks,"numCQuarksMatched")
         self.events["GenFatJetGood"] = ak.with_field(self.events.GenFatJetGood,genFatJetsFromTop,"isFromTop")
-
+        '''
         return
 
     def fill_histograms_extra(self, variation):

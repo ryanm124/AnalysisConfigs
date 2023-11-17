@@ -1,6 +1,6 @@
 from pocket_coffea.utils.configurator import Configurator
 from pocket_coffea.lib.cut_definition import Cut
-from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel,get_nBtagEq,get_nBtagMin
+from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel,get_nBtagEq,get_nBtagMin, get_diLeptonFlavor
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.lib.columns_manager import ColOut
@@ -34,15 +34,13 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [
-
-f"{localdir}/datasets/DYJetsToLL_M-50_2018.json"
-  ],
+        "jsons": [ f"{localdir}/datasets/DYJetsToLL_M-50_2018.json"
+              ],
         "filter" : {
-            "samples": [ "DYJetsToLL_M-50" ],
+            "samples": ["DYJetsToLL_M-50"],
             "samples_exclude" : [],
             "year": ['2018']
-        } # f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2018.json",
+        } 
     },
 
     workflow = ttHbbBaseProcessor,
@@ -59,10 +57,9 @@ f"{localdir}/datasets/DYJetsToLL_M-50_2018.json"
     
     categories = {
         "baseline": [passthrough],
-        "1b" : [ get_nBtagEq(1, coll="BJetGood")],
-        "2b" : [ get_nBtagEq(2, coll="BJetGood")],
-        "3b" : [ get_nBtagEq(3, coll="BJetGood")],
-        "4b" : [ get_nBtagEq(4, coll="BJetGood")]
+        "ee" : [get_diLeptonFlavor("ee")],
+        "emu" : [get_diLeptonFlavor("emu")],
+        "mumu" : [get_diLeptonFlavor("mumu")]
     },
     
     # Weights configuration
@@ -72,7 +69,7 @@ f"{localdir}/datasets/DYJetsToLL_M-50_2018.json"
                           "pileup",
                           "sf_ele_reco", "sf_ele_id",
                           "sf_mu_id","sf_mu_iso",
-                          "sf_btag", "sf_jet_puId", 
+                          "sf_btag", "sf_jet_puId" 
                           ],
          
         }
@@ -84,7 +81,8 @@ f"{localdir}/datasets/DYJetsToLL_M-50_2018.json"
                 "inclusive": [  "pileup",
                                 "sf_ele_reco", "sf_ele_id",
                                 "sf_mu_id", "sf_mu_iso",
-                                 "sf_jet_puId","sf_btag"  
+                                 "sf_jet_puId","sf_btag"
+                                
                               ]
             },
           
@@ -146,20 +144,21 @@ f"{localdir}/datasets/DYJetsToLL_M-50_2018.json"
 
     columns = {
         "common": {
-            "bycategory": {
-                "baseline": [
-                    ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB"]),
-                    ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
-                    ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
-                    ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
-                    ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
-                    ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"]),
-                    ColOut("BBFatJetGoodL", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb"])
-                ]
-            }
-            
+            "inclusive": [
+                ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB", "genJetIdx"]),
+                ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "genJetAK8Idx", "rhoQCD"]),
+                ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
+                ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
+                ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
+                ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
+                ColOut("BBFatJetGoodL", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
+                ColOut("GenJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
+                ColOut("GenFatJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
+                ColOut("events",["genTtbarId"],store_size=False)
+            ]
         }
-    } 
+    }
+    
     
  
  
