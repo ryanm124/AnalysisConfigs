@@ -561,7 +561,7 @@
               "metadata": {
                   "year":"2018",
                   "isMC": true,
-                  "xsec":   29990.0  ,
+                  "xsec":   99.01  ,
                   "part": "" 
                   }
             }
@@ -575,7 +575,7 @@
               "metadata": {
                   "year":"2018",
                   "isMC": true,
-                  "xsec":   29990.0 ,
+                  "xsec":   20.23 ,
                   "part": "" 
                   }
             }
