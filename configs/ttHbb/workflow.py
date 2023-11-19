@@ -53,18 +53,18 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["JetGood"], self.jetGoodMask = jet_selection(
             self.events, "Jet", self.params, "LeptonGood"
         )
+        if "GenJet" in self.events:
+            self.events["GenJet"] = ak.with_field(self.events.GenJet, ak.zeros_like(self.events.GenJet.eta,dtype=int),"isFatJet")
 
-        self.events["GenJet"] = ak.with_field(self.events.GenJet, ak.zeros_like(self.events.GenJet.eta,dtype=int),"isFatJet")
-
-        self.events["GenJetGood"], self.jetGoodMask = jet_selection(
+            self.events["GenJetGood"], self.jetGoodMask = jet_selection(
             self.events, "GenJet", self.params
-        )
+            )
 
-        self.events["GenFatJet"] = ak.with_field(self.events.GenJetAK8, ak.ones_like(self.events.GenJetAK8.eta,dtype=int),"isFatJet")
+            self.events["GenFatJet"] = ak.with_field(self.events.GenJetAK8, ak.ones_like(self.events.GenJetAK8.eta,dtype=int),"isFatJet")
 
-        self.events["GenFatJetGood"], self.jetGoodMask = jet_selection(
+            self.events["GenFatJetGood"], self.jetGoodMask = jet_selection(
             self.events, "GenFatJet", self.params
-        )
+               )
 
         self.events["BJetGood"] = btagging(
             self.events["JetGood"], self.params.btagging.working_point[self._year]
