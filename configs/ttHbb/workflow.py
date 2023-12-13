@@ -53,7 +53,7 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["JetGood"], self.jetGoodMask = jet_selection(
             self.events, "Jet", self.params, "LeptonGood"
         )
-        if "GenJet" in self.events:
+        if self._isMC:
             self.events["GenJet"] = ak.with_field(self.events.GenJet, ak.zeros_like(self.events.GenJet.eta,dtype=int),"isFatJet")
 
             self.events["GenJetGood"], self.jetGoodMask = jet_selection(

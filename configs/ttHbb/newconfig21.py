@@ -34,15 +34,10 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [ f"{localdir}/datasets/TTWJetsToLNu_2018.json",
-                   f"{localdir}/datasets/ZJetsToQQ_HT800toInf_2018.json",
-                   f"{localdir}/datasets/DYJetsToLL_M-50_2018.json",
-                   f"{localdir}/datasets/TTToSemiLeptonic_2018.json",
-                   f"{localdir}/datasets/TTToHadronic_2018.json",
-                   f"{localdir}/datasets/TTTo2L2Nu_2018.json"
+        "jsons": [ f"{localdir}/datasets/TTWJetsToLNu_2018.json"
               ],
         "filter" : {
-            "samples": ["TTWJetsToLNu", "ZJetsToQQ_HT800toInf" , "DYJetsToLL_M-50", "TTToSemiLeptonic", "TTToHadronic", "TTTo2L2Nu"],
+            "samples": ["TTWJetsToLNu"],
             "samples_exclude" : [],
             "year": ['2018']
         } 
@@ -182,12 +177,12 @@ run_options = {
         "workers"        : 1,
         "scaleout"       : 50,
         "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
-        "queue"          : "microcentury",
+        "queue"          : "workday",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,
-        "chunk"          : 400000,
+        "chunk"          : 320000,
         "retries"        : 50,
         "treereduction"  : 20,
         "adapt"          : False,

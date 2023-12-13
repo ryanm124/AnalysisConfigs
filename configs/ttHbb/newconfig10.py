@@ -34,10 +34,10 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [ f"{localdir}/datasets/DATA_EleMu_redirector.json"
+        "jsons": [ f"{localdir}/datasets/DATA_MuonEG.json"
               ],
         "filter" : {
-            "samples": ["DATA_EleMu"],
+            "samples": ["DATA_MuonEG"],
             "samples_exclude" : [],
             "year": ['2018']
         } 
@@ -145,16 +145,16 @@ cfg = Configurator(
     columns = {
         "common": {
             "inclusive": [
-                ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB", "genJetIdx"]),
-                ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "genJetAK8Idx", "rhoQCD"]),
+                ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB", "eta"]),
+                ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "eta", "rhoQCD"]),
                 ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
                 ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
                 ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
                 ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
                 ColOut("BBFatJetGoodL", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
-                ColOut("GenJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
-                ColOut("GenFatJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
-                ColOut("events",["genTtbarId"],store_size=False)
+                #ColOut("GenJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
+                #ColOut("GenFatJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
+                #ColOut("events",["genTtbarId"],store_size=False)
             ]
         }
     }
@@ -177,12 +177,12 @@ run_options = {
         "workers"        : 1,
         "scaleout"       : 50,
         "worker_image"   : "/cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest",
-        "queue"          : "microcentury",
+        "queue"          : "workday",
         "walltime"       : "00:40:00",
         "mem_per_worker" : "4GB", # GB
         "disk_per_worker" : "1GB", # GB
         "exclusive"      : False,
-        "chunk"          : 400000,
+        "chunk"          : 320000,
         "retries"        : 50,
         "treereduction"  : 20,
         "adapt"          : False,
