@@ -101,8 +101,8 @@
             }
         ]
   },
-   "TTToSemiLeptonic":{
-        "sample": "TTToSemiLeptonic",
+   "TTToSemiLeptonic_2018":{
+        "sample": "TTToSemiLeptonic_2018",
         "json_output"    : "datasets/TTToSemiLeptonic_2018.json",
         "files":[
             { "das_names": ["/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],

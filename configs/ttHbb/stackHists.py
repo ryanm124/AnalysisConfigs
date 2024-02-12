@@ -14,40 +14,37 @@ import math
 
 
 
-filename ="output_2018.coffea"
-#"jan24_all/output_newconfigLost2_all.coffea"
-#"jan24_all/output_newconfigLost2_all.coffea"
-# "jan24_all/output_newconfigLost1_all.coffea"
-#"jan24_all_test_new_3b/output_newconfigLost3_all.coffea"
+filename = "/afs/cern.ch/work/r/rmccarth/public/output_allNoDupes.coffea"
+
 
 o = load(filename)
+'''
 print("o.keys()")
 print(o.keys())
 print("o['variables'].keys()")
 print(o['variables'].keys())
-#print(o['columns']['ttHTobb']['ttHTobb_2018']['baseline'].keys())
-#'columns', 'processing_metadata', 'datasets_metadata'
 print("o['columns'].keys()")
 print(o['columns'].keys())
 
 print("o['datasets_metadata'].keys()")
 print(o['datasets_metadata'].keys())
+'''
 
-o = load(filename)
-print("o.keys()")
-print(o.keys())
+
+
 print("CUTFLOW")
 print(o['cutflow'].keys())
-print(o['cutflow'])
-print("o['cutflow']['baseline']")
-print(o['cutflow']['baseline'])
 
+'''
 print("o['sumw']['baseline']")
 print(o['sumw']['baseline'])
 
 print("o['sumw']['baseline']['TTToSemiLeptonic__2018']")
 print(o['sumw']['baseline']['TTToSemiLeptonic__2018'])
+'''
 
+# selection                                                                                                                                    
+selection = 'mumu'  #'emu'#'ee'#'baseline'
 
 vars = {}
 for i, var_name in enumerate(o['variables'].keys()):
@@ -98,12 +95,17 @@ for i, var_name in enumerate(o['variables'].keys()):
                 sam_namey = sam_name[:-9] + '_2018_EraD'
 
             eeras+=1
-        print("o['variables']['ElectronGood_eta_1']")
-        print(o['variables']['ElectronGood_eta_1'])    
+
         varHist = o['variables'][var_name][sam_name[:-9]][sam_namey ]
-    
-        # baseline is the last index in cat, so this is the 1b category                                                                        
-        h = varHist.stack("cat").project(varHist.axes[-1].name)[0]
+
+        # baseline is 0th hist
+        
+        aindex = 0
+        if selection == 'baseline': aindex = 0
+        if selection ==	'ee': aindex = 1
+        if selection == 'emu': aindex = 2
+        if selection == 'mumu': aindex = 3
+        h = varHist.stack("cat").project(varHist.axes[-1].name)[aindex]
         hists[sam_name[:-9]]=h
 
 import yaml
@@ -112,10 +114,22 @@ import yaml
 with open('/afs/cern.ch/user/a/asparker/public/dec_ttH/PocketCoffea/AnalysisConfigs/configs/ttHbb/params/plotting_style.yaml', 'r') as yaml_file:
     plotting_styles = yaml.safe_load(yaml_file)
 
-# Assuming your cutflow data is stored in the 'cutflow_data' dictionary
-cutflow_data = o['cutflow']['baseline']
-cutflow_uncerts = o['sumw2']['baseline']
 
+# selection 
+#selection = 'baseline'
+
+# Assuming your cutflow data is stored in the 'cutflow_data' dictionary
+cutflow_data = o['cutflow'][selection]  #['mumu']#['baseline']
+uncerts = o['sumw2'][selection] # ['mumu']
+
+
+
+print(o['sum_genweights'].keys())
+genweights = o['sum_genweights']
+
+cutflow_data = o['cutflow'][selection] 
+
+columns = o['columns']
 
 # Define LaTeX table header
 latex_table = "\\begin{table}[htbp]\n"
@@ -143,30 +157,54 @@ for group, processes in plotting_styles['plotting_style']['samples_groups'].item
         if 'ZJetsToQQ' in process2: process2 = process+ '_v7__2018'
         if 'ST' in process2: process2 = process+ '_v7__2018'
         if 'QCD' in process2: process2 = process+ '_v7__2018'
+        if 'ttHTobb' in process2: process2 = process+ '_2018'
+        if 'WJetsToQQ' in process2 : process2 = process+ '_v7__2018'
+        if 'TTWJetsToQQ'  in process2: process2 = process+ '__2018'
+        
+        cutflow_weight = 0
+ 
+        weights1 = ak.from_numpy(columns[process+'__nominal'][process2][selection]['weight_nominal'].value)
+        weights = ak.sum(weights1,axis=0)
 
-        #print(processes)
+        squared_errors_sum = 0
+        sum_genweights = genweights[process2]
+        for w in zip( weights1 ):
+            # Calculate weight / sum_genweight for each event
+            ratio = w / sum_genweights
+
+            # Square the result and add to the sum
+            squared_errors_sum += ratio ** 2
+
+        # Take the square root of the sum
+        error2 = np.sqrt(squared_errors_sum)
+
+        
+        
+        #print("Resulting error2:", error2)
+ 
+        cutflow_weight = weights
+        print("cutflow_weight")
+        print(cutflow_weight)
+        print("sum_genweights")
+        print(sum_genweights)
+
         if process2 in cutflow_data:
-            #print("process2 in cutflow data")
-            #print(group_count)
-            #group_count += cutflow_data[process2][process]
-            #group_uncert +=  cutflow_uncerts[process2][process]
-            gCount.append(cutflow_data[process2][process])
-            gUnc.append(cutflow_uncerts[process2][process])
-            #print("group_count after addition")
-            #print(group_count)
+            print(process)
+            gCount.append( cutflow_weight / sum_genweights    )
+            gUnc.append( math.sqrt( uncerts[process2][process] ) )
     print(gCount)
     print(gUnc)
     for c in gCount: 
         group_count += c
     for u in gUnc:
-        group_uncert += u
+        group_uncert += u**2
         
     # Replace group names with the ones from the YAML labels_mc section
     group_label = plotting_styles['plotting_style']['labels_mc'].get(group, group)
     
-    group_uncert2 = math.sqrt(group_uncert) # * group_uncert)
+    group_uncert2 = math.sqrt(group_uncert)
 
-    latex_table += f"{group_label} & {group_count} \pm {group_uncert2:.2g}  \\\\\n"
+    latex_table += f"{group_label} & {group_count:.0f} \pm {group_uncert2:.2f}  \\\\\n"
 
 # Add LaTeX table footer
 latex_table += "\\hline\n"

@@ -27,7 +27,11 @@ from pocket_coffea.parameters import defaults
 
 aargs = get_year_from_args()
 year = aargs[0] #'2018'#args.year
-sample = aargs[1] # 'ZJetsToQQ_HT800toInf'
+sample = aargs[1]
+print(sample)
+if('_v7' in sample): sample =sample[:-3] # 'ZJetsToQQ_HT800toInf'
+print(sample)
+samples = aargs[1]
 #year = '2018'
 # Loading default parameters
 from pocket_coffea.parameters import defaults
@@ -82,7 +86,7 @@ cfg = Configurator(
                           "pileup",
                           "sf_ele_reco", "sf_ele_id",
                           "sf_mu_id","sf_mu_iso",
-                          "sf_btag", "sf_jet_puId" 
+                          "sf_btag", "sf_jet_puId",  "sf_ele_trigger", "sf_mu_trigger" 
                           ],
          
         }
@@ -94,7 +98,7 @@ cfg = Configurator(
                 "inclusive": [  "pileup",
                                 "sf_ele_reco", "sf_ele_id",
                                 "sf_mu_id", "sf_mu_iso",
-                                 "sf_jet_puId","sf_btag"
+                                 "sf_jet_puId","sf_btag" ,  "sf_ele_trigger", "sf_mu_trigger"
                                 
                               ]
             },
@@ -161,6 +165,8 @@ cfg = Configurator(
                 ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB", "genJetIdx"]),
                 ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "genJetAK8Idx", "rhoQCD"]),
                 ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
+                ColOut("MuonGood",["eta","pt","phi"]),
+                ColOut("ElectronGood",["eta","pt","phi"]),                
                 ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
                 ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
                 ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),

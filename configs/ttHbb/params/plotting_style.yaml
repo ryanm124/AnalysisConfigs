@@ -2,6 +2,7 @@ plotting_style:
    samples_groups:
      ttHTobb:
        - ttHTobb
+     THW:
        - THW
      ttHToNonbb:
        - ttHToNonbb
