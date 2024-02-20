@@ -1,0 +1,19 @@
+{
+    "TTWJetsToQQ__2018": {
+        "metadata": {
+            "das_names": "['/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM']",
+            "sample": "TTWJetsToQQ",
+            "year": "2018",
+            "isMC": "True",
+            "xsec": "0.3708",
+            "part": "",
+            "nevents": "970179",
+            "size": "2658308128"
+        },
+        "files": [
+            "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL18NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/120000/3A636568-D70D-034A-AAA3-3669E136928C.root",
+            "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL18NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/10DB4C63-2DF6-504D-88C9-DED9985E3B3D.root",
+            "root://dcache-cms-xrootd.desy.de:1094//store/mc/RunIISummer20UL18NanoAODv9/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/280000/ED28A621-82EB-B346-9299-24EED49BA3F3.root"
+        ]
+    }
+}
