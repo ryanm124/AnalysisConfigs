@@ -86,7 +86,7 @@ cfg = Configurator(
                           "pileup",
                           "sf_ele_reco", "sf_ele_id",
                           "sf_mu_id","sf_mu_iso",
-                          "sf_btag", "sf_jet_puId",  "sf_mu_trigger" 
+                          "sf_btag", "sf_jet_puId" 
                           ],
          
         }
