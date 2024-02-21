@@ -79,14 +79,14 @@ cfg = Configurator(
         "mumu" : [get_diLeptonFlavor("mumu")]
     },
     
-    # Weights configuration
+    # Weights configuration # "sf_ele_trigger", "sf_mu_trigger"
     weights = {
         "common": {
             "inclusive": ["genWeight","lumi","XS",
                           "pileup",
                           "sf_ele_reco", "sf_ele_id",
                           "sf_mu_id","sf_mu_iso",
-                          "sf_btag", "sf_jet_puId",  "sf_ele_trigger", "sf_mu_trigger" 
+                          "sf_btag", "sf_jet_puId",  "sf_mu_trigger" 
                           ],
          
         }
@@ -98,7 +98,7 @@ cfg = Configurator(
                 "inclusive": [  "pileup",
                                 "sf_ele_reco", "sf_ele_id",
                                 "sf_mu_id", "sf_mu_iso",
-                                 "sf_jet_puId","sf_btag" ,  "sf_ele_trigger", "sf_mu_trigger"
+                                 "sf_jet_puId","sf_btag"
                                 
                               ]
             },
@@ -165,8 +165,8 @@ cfg = Configurator(
                 ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB", "genJetIdx"]),
                 ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "genJetAK8Idx", "rhoQCD"]),
                 ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
-                ColOut("MuonGood",["eta","pt","phi","jetRelIso","pfRelIso03_all", "miniPFRelIso_all", "mvaTTH", "miniIsoId", "mvaIso" , "puppiIsoId" ]),
-                ColOut("ElectronGood",["eta","pt","phi","jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "mvaTTH", "miniIsoId", "mvaIso" ]),                
+                ColOut("MuonGood",["eta","pt","phi","jetRelIso","pfRelIso03_all", "miniPFRelIso_all", "mvaTTH", "miniIsoId" , "puppiIsoId" ]),
+                ColOut("ElectronGood",["eta","pt","phi","jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "mvaTTH", "miniIsoId" ]),                
                 ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
                 ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
                 ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
