@@ -2,13 +2,11 @@ object_preselection:
   Muon:
     pt: 15
     eta: 2.4
-    iso: 0.25 #PFIsoLoose
     id: looseId
 
   Electron:
     pt: 15
     eta: 2.4
-    iso: 0.06
     id: mvaFall17V2Iso_WPL
 
   Jet:
