@@ -70,14 +70,10 @@ cfg = Configurator(
  f"{localdir}/datasets/ST_t-channel_top_4f_InclusiveDecays_2018.json",
  f"{localdir}/datasets/ST_t-channel_antitop_4f_InclusiveDecays_2018.json",
  f"{localdir}/datasets/ST_tW_top_5f_inclusiveDecays_2018.json",
- f"{localdir}/datasets/ST_tW_antitop_5f_inclusiveDecays_2018.json",            
- f"{localdir}/datasets/DATA_EGamma.json",
- f"{localdir}/datasets/DATA_SingleMuon.json",            
-
-            
+ f"{localdir}/datasets/ST_tW_antitop_5f_inclusiveDecays_2018.json"            
         ],
         "filter" : {
-            "samples": [ "WJetsToLNu_HT-200To400", "WJetsToLNu_HT-400To600","WJetsToLNu_HT-600To800" , "WJetsToLNu_HT-800To1200" , "WJetsToLNu_HT-1200To2500" , "WJetsToLNu_HT-2500ToInf", "WJetsToQQ_HT400to600" , "WJetsToQQ_HT600to800_2018" , "WJetsToQQ_HT800toInf_2018" , "ZJetsToQQ_HT400to600" , "ZJetsToQQ_HT600to800" , "ZJetsToQQ_HT800toInf" , "DYJetsToLL_M-50", "ST_s-channel_4f_leptonDecays" , "ST_t-channel_top_4f_InclusiveDecays", "ST_t-channel_antitop_4f_InclusiveDecays", "ST_tW_top_5f_inclusiveDecays", "ST_tW_antitop_5f_inclusiveDecays", "QCD_HT500to700", "QCD_HT700to1000", "QCD_HT1000to1500", "QCD_HT1500to2000" , "QCD_HT2000toInf", "DATA_EGamma", "DATA_SingleMuon"
+            "samples": [ "WJetsToLNu_HT-200To400", "WJetsToLNu_HT-400To600","WJetsToLNu_HT-600To800" , "WJetsToLNu_HT-800To1200" , "WJetsToLNu_HT-1200To2500" , "WJetsToLNu_HT-2500ToInf", "WJetsToQQ_HT400to600" , "WJetsToQQ_HT600to800_2018" , "WJetsToQQ_HT800toInf_2018" , "ZJetsToQQ_HT400to600" , "ZJetsToQQ_HT600to800" , "ZJetsToQQ_HT800toInf" , "DYJetsToLL_M-50", "ST_s-channel_4f_leptonDecays" , "ST_t-channel_top_4f_InclusiveDecays", "ST_t-channel_antitop_4f_InclusiveDecays", "ST_tW_top_5f_inclusiveDecays", "ST_tW_antitop_5f_inclusiveDecays", "QCD_HT500to700", "QCD_HT700to1000", "QCD_HT1000to1500", "QCD_HT1500to2000" , "QCD_HT2000toInf"
                         ],
             "samples_exclude" : [],
             "year": [year]
@@ -189,8 +185,8 @@ cfg = Configurator(
                 ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB", "genJetIdx"]),
                 ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "genJetAK8Idx", "rhoQCD"]),
                 ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
-                ColOut("MuonGood",["eta","pt","phi","jetRelIso","pfRelIso03_all", "miniPFRelIso_all" , "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH", "puppiIsoId" ]),
-                ColOut("ElectronGood",["eta","pt","phi","jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "pfRelIso03_chg","miniPFRelIso_chg" "mvaTTH" ]),
+                ColOut("MuonGood",["eta","pt","phi","jetRelIso","pfRelIso03_all", "miniPFRelIso_all" , "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH" ]),
+                ColOut("ElectronGood",["eta","pt","phi","jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH" ]),
                 ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
                 ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
                 ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),

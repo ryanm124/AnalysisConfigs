@@ -51,18 +51,14 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": [ 
- f"{localdir}/datasets/TTHtoNonbb_2018.json",                   
- f"{localdir}/datasets/TTbbDiLeptonic_Powheg_2018.json",
- f"{localdir}/datasets/TTbbSemiLeptonic_Powheg_2018.json",
- f"{localdir}/datasets/TTbbHadronic_Powheg_2018.json",
- f"{localdir}/datasets/THW_2018.json",
- f"{localdir}/datasets/TTToSemiLeptonic_2018.json",
- f"{localdir}/datasets/TTToHadronic_2018.json",
+        "jsons": [
+ f"{localdir}/datasets/TTGJets_2018.json",
+ f"{localdir}/datasets/WW_2018.json",
+ f"{localdir}/datasets/ZZ_2018.json",
+ f"{localdir}/datasets/WZ_2018.json"
               ],
         "filter" : {
-            "samples": ["ttHToNonbb", "TTbbDiLeptonic_Powheg" , "TTbbSemiLeptonic_Powheg" , "TTbbHadronic_Powheg" , "THW" , "TTToSemiLeptonic_2018"  , "TTToHadronic"
-                        ],
+            "samples": [ "TTGJets" , "WW", "ZZ", "WZ" ],
             "samples_exclude" : [],
             "year": [year]
         } 
