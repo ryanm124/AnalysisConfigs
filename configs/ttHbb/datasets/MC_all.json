@@ -1,6 +1,21 @@
 
 {
 
+   "TTTo2L2Nu":{
+        "sample": "TTTo2L2Nu",
+        "json_output"    : "datasets/TTTo2L2Nu_2018.json",
+        "files":[
+            { "das_names": ["/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
+              "metadata": {
+                  "year":"2018",
+                  "isMC": true,
+                  "xsec": 88.3419,
+                  "part": ""
+                  }
+            }
+        ]
+  },
+    
     "ttHTobb": {
 	"sample": "ttHTobb",
         "json_output": "datasets/ttHTobb_2018.json",
@@ -110,20 +125,6 @@
                   "year":"2018",
                   "isMC": true,
                   "xsec": 365.4574,
-                  "part": "" 
-                  }
-            }
-        ]
-  },
-   "TTTo2L2Nu":{
-        "sample": "TTTo2L2Nu",
-        "json_output"    : "datasets/TTTo2L2Nu_2018.json",
-        "files":[
-            { "das_names": ["/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"],
-              "metadata": {
-                  "year":"2018",
-                  "isMC": true,
-                  "xsec": 88.3419,
                   "part": "" 
                   }
             }
