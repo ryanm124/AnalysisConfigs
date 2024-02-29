@@ -61,7 +61,7 @@ cfg = Configurator(
     },
 
     workflow = ttHbbBaseProcessor,
-    workflow_options = {},
+    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttH/feb29"},
     
     # Skimming and categorization
     skim = [
