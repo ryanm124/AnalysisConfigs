@@ -16,7 +16,7 @@ cloudpickle.register_pickle_by_value(workflow)
 cloudpickle.register_pickle_by_value(custom_cut_functions)
 localdir = os.path.dirname(os.path.abspath(__file__))
 
-from runner import get_year_from_args
+from argParser import get_year_from_args
 #import argparse
 import os
 from pocket_coffea.parameters import defaults
@@ -61,7 +61,7 @@ cfg = Configurator(
     },
 
     workflow = ttHbbBaseProcessor,
-    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttH/feb29"},
+    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/r/rmccarth/ttHbb/chunks"},
     
     # Skimming and categorization
     skim = [
