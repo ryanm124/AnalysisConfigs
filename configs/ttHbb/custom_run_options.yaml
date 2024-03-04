@@ -4,12 +4,12 @@ mem-per-worker: "4GB"
 disk-per-worker: "2GB"
 worker-image: /cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest
 death-timeout: "4600"
-queue: "longlunch"
+queue: "workday"
 adaptive: false
 performance-report: true
 custom-setup-commands: null
 conda-env: false
 local-virtualenv: true
 skipbadfiles: 10
-chunksize: 10000
+chunksize: 50000
 dump_columns_as_arrays_per_chunk: true
