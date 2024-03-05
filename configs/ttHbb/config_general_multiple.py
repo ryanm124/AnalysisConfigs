@@ -4,7 +4,7 @@ from pocket_coffea.lib.cut_functions import get_nObj_min, get_HLTsel,get_nBtagEq
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.parameters.histograms import *
 from pocket_coffea.lib.columns_manager import ColOut
-import os
+import os, ast
 import workflow
 from workflow import ttHbbBaseProcessor 
 
@@ -28,17 +28,30 @@ from pocket_coffea.parameters import defaults
 aargs = get_year_from_args()
 year = aargs[0] #'2018'#args.year
 samples = aargs[1]
+samples_list_string = aargs[2]
 
+print("samples_list_string")
+print(samples_list_string)
+#samples_list = ast.literal_eval(samples_list_string)
+samples_list = [sample.strip() for sample in samples_list_string.split(',')]
+print(samples_list)
 
 
 formatted_samples_files = []
 formatted_samples = []
-formatted_samples_names = []
+#formatted_samples_names = []
 
-for i, s in enumerate(samples):
+for i, s in enumerate(samples_list):
     formatted_samples_files.append(f"{localdir}/datasets/{s}_{year}.json")
-    formatted_samples.append(f"formatted_samples_{i+1}")
-    formatted_samples_names.append(f"samples_{i+1}")
+    formatted_samples.append(f"{s}")
+    #formatted_samples_names.append(f"samples_{i+1}")
+
+    
+print("formatted_samples_files")
+print(formatted_samples_files)
+
+print("formatted_samples")
+print(formatted_samples)
 
 # Loading default parameters
 default_parameters = defaults.get_default_parameters()
@@ -51,8 +64,8 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                   update=True)
 
 # Configurator instance
-datasets_jsons = [f"{formatted_sample}" for formatted_sample in formatted_samples]
-datasets_filter_samples = [f"{formatted_sample_name}" for formatted_sample_name in formatted_samples_names]
+datasets_jsons = [f"{formatted_sample}" for formatted_sample in formatted_samples_files]
+datasets_filter_samples = [f"{formatted_sample_name}" for formatted_sample_name in formatted_samples ]
 
 
 
@@ -107,7 +120,7 @@ cfg = Configurator(
     },
 
     workflow = ttHbbBaseProcessor,
-    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/r/rmccarth/ttHbb/chunks"},
+    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/a/asparker/ttHbb/chunks"},
     
     # Skimming and categorization
     skim = [
