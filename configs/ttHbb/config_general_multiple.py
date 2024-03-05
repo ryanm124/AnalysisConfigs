@@ -43,8 +43,12 @@ formatted_samples = []
 
 for i, s in enumerate(samples_list):
     formatted_samples_files.append(f"{localdir}/datasets/{s}_{year}.json")
-    formatted_samples.append(f"{s}")
-    #formatted_samples_names.append(f"samples_{i+1}")
+    if 'v7' in s:
+        formatted_samples.append(f"{s[:-3]}")
+        print(s[:-3])
+    else:
+        formatted_samples.append(f"{s}")
+        #formatted_samples_names.append(f"samples_{i+1}")
 
     
 print("formatted_samples_files")
@@ -120,7 +124,8 @@ cfg = Configurator(
     },
 
     workflow = ttHbbBaseProcessor,
-    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/a/asparker/ttHbb/chunks"},
+    #workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/a/asparker/ttHbb/chunks"},
+    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttH/chunks"},
     
     # Skimming and categorization
     skim = [

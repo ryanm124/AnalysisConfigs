@@ -38,7 +38,7 @@
 
 
     "ttHToNonbb": {
-	"sample": "TTHtoNonbbandTHW",
+	"sample": "ttHToNonbb",
 	"json_output": "datasets/TTHtoNonbb_2018.json",
 	"files": [
 	        {
