@@ -14,21 +14,25 @@ import math
 
 
 
-filename = "/afs/cern.ch/work/r/rmccarth/public/output_allNoDupes.coffea"
+filename = "/afs/cern.ch/user/a/asparker/public/ttHmain/PocketCoffea/AnalysisConfigs/configs/ttHbb/production_Feb21/output_config_general_all_ttHTobb.coffea"
+#"/afs/cern.ch/work/r/rmccarth/public/output_allNoDupes.coffea"
 
 
 o = load(filename)
-'''
+
 print("o.keys()")
 print(o.keys())
 print("o['variables'].keys()")
 print(o['variables'].keys())
 print("o['columns'].keys()")
 print(o['columns'].keys())
+print(o['columns']['ttHTobb__nominal'].keys())
+print( "columns ttHTobb__nominal ttHTobb_2018 ")
+print(o['columns']['ttHTobb__nominal']['ttHTobb_2018'].keys())
+print(o['columns']['ttHTobb__nominal']['ttHTobb_2018']['ee'].keys())
 
 print("o['datasets_metadata'].keys()")
 print(o['datasets_metadata'].keys())
-'''
 
 
 
