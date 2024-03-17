@@ -4,7 +4,7 @@
     
     "DATA_SingleMuon": {
         "sample": "DATA_SingleMuon",
-        "json_output": "datasets/DATA_SingleMuon.json",
+        "json_output": "datasets/DATA_SingleMuon_2018.json",
         "files": [
             {
                 "das_names": [

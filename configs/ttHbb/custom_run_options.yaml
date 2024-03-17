@@ -1,6 +1,6 @@
 scaleout: 50
 cores-per-worker: 1
-mem-per-worker: "10GB"
+mem-per-worker: "4GB"
 disk-per-worker: "4GB"
 worker-image: /cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-cc7-latest
 death-timeout: "7600"

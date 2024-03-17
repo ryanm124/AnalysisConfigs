@@ -4,7 +4,7 @@
     
     "DATA_EGamma": {
         "sample": "DATA_EGamma",
-        "json_output": "datasets/DATA_EGamma.json",
+        "json_output": "datasets/DATA_EGamma_2018.json",
         "files": [
             {
                 "das_names": [

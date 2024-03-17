@@ -1,0 +1,16 @@
+{
+         "QCD_HT1000to1500_v7":{
+        "sample": "QCD_HT1000to1500",
+        "json_output"    : "datasets/QCD_HT1000to1500_v7_2018.json",
+        "files":[
+            { "das_names": ["/QCD_HT1000to1500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM"],
+              "metadata": {
+                  "year":"2018",
+                  "isMC": true,
+                  "xsec":    1094.0 ,
+                  "part": ""
+                  }
+            }
+        ]
+  }
+}
