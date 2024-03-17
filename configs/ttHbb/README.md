@@ -45,11 +45,36 @@ git clone git@github.com:ryanm124/AnalysisConfigs.git
 
 ### make datasets
 ```
-build_datasets.py --cfg datasets/MC_all.json -o
+build_datasets.py --cfg datasets/MC_all.json -bs T1_US_FNAL_Disk -o
+build_datasets.py --cfg datasets/datasets_EGamma_definitions.json -bs  T1_US_FNAL_Disk  -o 
+build_datasets.py --cfg datasets/datasets_SingleMuon_definitions.json -bs  T1_US_FNAL_Disk  -o
+
+build_datasets.py --cfg datasets/QCD_500_2018.json -ws T1_DE_KIT_Disk -o 
+build_datasets.py --cfg datasets/QCD_700_2018.json -ws T1_FR_CCIN2P3_Disk -o 
+
+build_datasets.py --cfg datasets/TT_2018.json -ws T2_BE_IIHE -o 
+build_datasets.py --cfg datasets/QCD_1000_2018.json -ws T2_AT_Vienna -o
+build_datasets.py --cfg datasets/QCD_1500_2018.json -ws T1_DE_KIT_Disk -o
+
+build_datasets.py --cfg datasets/QCD_1000_2018.json -ws T2_AT_Vienna -o
+
+build_datasets.py --cfg datasets/WJets_2500_2018.json -ws T2_CH_CERN -o
+
 ```
 #### run config with dataset names (configs 1-9 and 12-20 are the ones you need to add up to get all data and MC for 2018)
 ```
-runner.py --cfg newconfig1.py  -o out_Jan24
+runner.py --cfg config_EGamma_data.py -o production_March14 --executor dask@lxplus --custom-run-options custom_run_options.yaml
+runner.py --cfg config_SingleMuon_data_2018.py -o production_March14 --executor dask@lxplus --custom-run-options custom_run_options.yaml
+
+runner.py --cfg config_QCD_2018.py -o production_March14 --executor dask@lxplus --custom-run-options custom_run_options.yaml
+runner.py --cfg config_TTTo2L2Nu_2018.py -o production_March14 --executor dask@lxplus --custom-run-options custom_run_options.yaml
+runner.py --cfg config_ST_2018.py -o production_March14 --executor dask@lxplus --custom-run-options custom_run_options.yaml
+runner.py --cfg config_Tops_2018.py -o production_March14 --executor dask@lxplus --custom-run-options custom_run_options.yaml
+runner.py --cfg config_ttH_2018.py -o production_March14 --executor dask@lxplus --custom-run-options custom_run_options.yaml
+runner.py --cfg config_TTbb_Powheg_2018.py -o production_March14  --executor dask@lxplus --custom-run-options custom_run_options.yaml
+runner.py --cfg config_bosons_2018.py -o production_March14  --executor dask@lxplus --custom-run-options custom_run_options.yaml
+
+
 ```
 ### merge outfiles
 ```
