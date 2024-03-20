@@ -62,7 +62,7 @@ cfg = Configurator(
 
     workflow = ttHbbBaseProcessor,
     #workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/a/asparker/ttHbb/chunks"},
-    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttH/chunks"},
+    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/r/rmccarth/ttHbb/chunks"},
     
     # Skimming and categorization
     skim = [
@@ -71,7 +71,9 @@ cfg = Configurator(
              ],
              
     preselections = [dilepton_presel,
-                     get_nObj_min(2,25,"LeptonGood")],
+                     get_nObj_min(2,25,"LeptonGood"),
+                     get_nObj_min(1, 200., "FatJetGood")
+                     ],
     
     categories = {
         "baseline": [passthrough],
@@ -165,16 +167,10 @@ cfg = Configurator(
             "inclusive": [
                 ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB", "genJetIdx"]),
                 ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "genJetAK8Idx", "rhoQCD"]),
-                ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
-                ColOut("MuonGood",["eta","pt","phi","jetRelIso","pfRelIso03_all", "miniPFRelIso_all" , "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH" ]),
-                ColOut("ElectronGood",["eta","pt","phi","jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH" ]),                
-                ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
-                ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
-                ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
-                ColOut("BBFatJetGoodL", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
-                ColOut("GenJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
-                ColOut("GenFatJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
-                ColOut("events",["genTtbarId"],store_size=False)
+                ColOut("MuonGood",["eta","pt","phi","mass","charge","jetRelIso","pfRelIso03_all", "miniPFRelIso_all" , "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH" ]),
+                ColOut("ElectronGood",["eta","pt","phi","mass","charge","jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH" ]),                
+                ColOut("events",["genTtbarId"],store_size=False),
+                ColOut("MET",["pt"])
             ]
         }
     }

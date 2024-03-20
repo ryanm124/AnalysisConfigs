@@ -27,8 +27,8 @@ from pocket_coffea.parameters import defaults
 
 #aargs = get_year_from_args()
 year = "2018" #c#aargs[0] #'2018'#args.year
-samples = "QCD"#aargs[1]
-samples_list_string = "QCD_HT500to700_v7,QCD_HT700to1000_v7,QCD_HT1000to1500_v7,QCD_HT1500to2000_v7,QCD_HT2000toInf_v7"  #aargs[2]
+samples = "QCD" #aargs[1]
+samples_list_string = "QCD_HT500to700_v7,QCD_HT700to1000_v7,QCD_HT1000to1500_v7,QCD_HT1500to2000_v7,QCD_HT2000toInf_v7"#aargs[2]
 
 print("samples_list_string")
 print(samples_list_string)
@@ -134,7 +134,9 @@ cfg = Configurator(
              ],
              
     preselections = [dilepton_presel,
-                     get_nObj_min(2,25,"LeptonGood")],
+                     get_nObj_min(2,25,"LeptonGood"),
+                     get_nObj_min(1, 200., "FatJetGood")
+                     ],
     
     categories = {
         "baseline": [passthrough],
@@ -226,18 +228,12 @@ cfg = Configurator(
     columns = {
         "common": {
             "inclusive": [
-                ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB", "genJetIdx"]),
-                ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "genJetAK8Idx", "rhoQCD"]),
-                ColOut("LeptonGood",["eta","pt","phi","pdgId"]),
-                ColOut("MuonGood",["eta","pt","phi","jetRelIso","pfRelIso03_all", "miniPFRelIso_all" , "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH", "pfRelIso04_all" ]),
-                ColOut("ElectronGood",["eta","pt","phi","jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH","dr03EcalRecHitSumEt", "dr03HcalDepth1TowerSumEt", "dr03TkSumPt", "dr03TkSumPtHEEP" ]),                
-                ColOut("BJetGood", ["eta","pt","phi","btagDeepFlavB"]),
-                ColOut("BBFatJetGoodT", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
-                ColOut("BBFatJetGoodM", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
-                ColOut("BBFatJetGoodL", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
-                ColOut("GenJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
-                ColOut("GenFatJet",["eta","hadronFlavour","mass","partonFlavour","phi","pt"]),
-                ColOut("events",["genTtbarId"],store_size=False)
+                ColOut("JetGood", ["eta","pt","phi","btagDeepFlavB"]),
+                ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
+                ColOut("MuonGood",["eta","pt","phi","mass","charge","jetRelIso","pfRelIso03_all", "miniPFRelIso_all" , "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH", "pfRelIso04_all" ]),
+                ColOut("ElectronGood",["eta","pt","phi","mass","charge","jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH","dr03EcalRecHitSumEt", "dr03HcalDepth1TowerSumEt", "dr03TkSumPt", "dr03TkSumPtHEEP" ]),                
+                ColOut("events",["genTtbarId"],store_size=False),
+                ColOut("MET",["pt"])
             ]
         }
     }
