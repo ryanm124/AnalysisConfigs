@@ -114,7 +114,7 @@ print(p.keys())
 #cats = ["baseline","ee","emu","mumu"]
 cats = ["baseline"]
 colors = ["red","orange","gold","yellow","green","cyan","blue","purple","sienna","greenyellow","lightblue"]
-vars = [] #["JetGood_pt"] #columns to plot, leave empty for all columns
+vars = ["JetGood_pt"]#[] #columns to plot, leave empty for all columns
 modifier = "pt_1" #which objects to plot per event, options are: 'pt_#' where # goes from 1 to N with 1 being the leading pt object
                   #                                              'max' which plots the highest value of the parameter per event
                   #                                              'all' which plots all values of the parameter per event
@@ -152,10 +152,10 @@ for cat in cats:
                     #name = name[:-4]
                 metpt = p[name[:-4]][cat]["MET_pt"] 
                 met_mask = metpt > 20
-                data = data[~met_mask]    
+                #data = data[~met_mask]    
                 for weightVar in p[name[:-4]][cat].fields:          
                     if ("weight" in weightVar):
-                        weight[weightVar] = p[name[:-4]][cat][weightVar][~met_mask]
+                        weight[weightVar] = p[name[:-4]][cat][weightVar]#[~met_mask]
                         weight[weightVar] = weight[weightVar] / o['sum_genweights'][name]
                 if(sample=="TTTo2L2Nu" or sample=="TTToSemiLeptonic" or sample=="TTToHadronic"):
                     if sample=="TTTo2L2Nu":
@@ -175,7 +175,7 @@ for cat in cats:
                     ttbb_ttb_mask = genTtbarId > 50
                     for weightVar in p[name[:-4]][cat].fields:
                         if ("weight" in weightVar):
-                            ttbb_weight[weightVar] = p[ttbbSample][cat][weightVar]
+                            ttbb_weight[weightVar] = p[ttbbSample][cat][weightVar]#[~met_mask]
                             print("....")
                             ttbb_weight[weightVar] = ttbb_weight[weightVar] / o['sum_genweights'][ttbbSample+'2018']
                             ttbb_weight[weightVar] = ttbb_weight[weightVar][ttbb_ttb_mask]
@@ -184,14 +184,14 @@ for cat in cats:
                             ttbb_weight[weightVar] = ttbb_weight[weightVar] * (C/D)
 
                     for key in weight:
-                        weight[key] = weight[key][~tt_ttb_mask]#[~MET_mask]        
+                        weight[key] = weight[key][~tt_ttb_mask]#[~met_mask]     
                     
                     if(quantity!="N" and col!="events"):
                         print(name[:-4])
-                        pt_data = p[name[:-4]][cat][col+"_pt"][~met_mask]
+                        pt_data = p[name[:-4]][cat][col+"_pt"]#[~met_mask]
                         sortIndices = ak.argsort(pt_data,ascending=False)
                         data = data[sortIndices]
-                        ttbb_pt_data = p[ttbbSample[:-4]][cat][col+"_pt"]
+                        ttbb_pt_data = p[ttbbSample][cat][col+"_pt"]#[~met_mask]
                         sortIndices = ak.argsort(ttbb_pt_data,ascending=False)
                         ttbb_data = ttbb_data[sortIndices]
                         if "pt" in modifier:
@@ -201,14 +201,14 @@ for cat in cats:
                         elif modifier=="max":
                             data = ak.max(data,axis=1)
                             ttbb_data = ak.max(ttbb_data,axis=1)
-                    data = data[~tt_ttb_mask][~met_mask]
-                    ttbb_data = ttbb_data[ttbb_ttb_mask][~met_mask]
+                    data = data[~tt_ttb_mask]#[~met_mask]
+                    ttbb_data = ttbb_data[ttbb_ttb_mask]#[~met_mask]
                     data = ak.concatenate((data,ttbb_data),axis=0)
                     for key in weight:
                         weight[key] = ak.concatenate((weight[key],ttbb_weight[key]),axis=0)
-
+                        weight[key] = weight[key]#[~met_mask]
                 elif(quantity!="N" and col!="events"):
-                    pt_data = p[name[:-4]][cat][col+"_pt"][~met_mask]
+                    pt_data = p[name[:-4]][cat][col+"_pt"]#[~met_mask]
                     sortIndices = ak.argsort(pt_data,ascending=False)
                     data = data[sortIndices]
                     if "pt" in modifier:
@@ -388,7 +388,7 @@ for cat in cats:
             stringMod = modifier.split("_")[1]
         else:
             stringMod = modifier
-        filepath = f"hists_optimizeMET_with20GeVcut/2018/{cat}/{col}"
+        filepath = f"hists_optimizeMET_witha0GeVcut/2018/{cat}/{col}"
         if not os.path.exists(filepath):
             os.makedirs(filepath)
         plt.savefig(filepath+"/"+var+"_"+stringMod+".pdf")
@@ -440,7 +440,7 @@ BBWorkingPoints = [0.0399]
 ElectronIsoCollections = ["miniPFRelIso_chg" ]
 MuonIsoCollections =  ["miniPFRelIso_chg"]
 
-metWPs = [15, 20, 25, 30, 40, 50]
+metWPs = [20, 50]
 # below are whatwe had originally
 #ElectronIsoWP = [0.06]
 #MuonPFIsoWP = [0.25]
@@ -450,7 +450,7 @@ metWPs = [15, 20, 25, 30, 40, 50]
 #Note, the newest paper from BTV on bbtagging references WPs but doesn't seem to list them
 #ElectronIsoCollections = ["jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "pfRelIso03_chg","miniPFRelIso_chg", "dr03EcalRecHitSumEt", "dr03HcalDepth1TowerSumEt", "dr03TkSumPt", "dr03TkSumPtHEEP"]
 #MuonIsoCollections = ["jetRelIso","pfRelIso03_all", "miniPFRelIso_all" , "pfRelIso03_chg","miniPFRelIso_chg", "pfRelIso04_all"]
-f = open("METOptimization_15-20-25-30-40-50_usingisofromRyansStudy_April2.txt", "a")
+f = open("METOptimization_20-50_usingisofromRyansStudy_April2.txt", "a")
 
 for metWP in metWPs:
 
