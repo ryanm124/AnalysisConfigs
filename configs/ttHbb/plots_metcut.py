@@ -100,7 +100,9 @@ print(o['sum_genweights'].keys())
 
 p = {}
 parquetDir = "/afs/cern.ch/work/a/asparker/public/ttHboosted_March20_merge" # "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttHboosted_March20/mergedFiles" # 
-for sample in os.listdir(parquetDir):
+#for sample in os.listdir(parquetDir):
+for sample in ['ST_s-channel_4f_leptonDecays_v7__']:
+
     print(sample)
     p[sample] = {}
     #for cat in os.listdir(parquetDir+"/"+sample):
@@ -109,7 +111,7 @@ for sample in os.listdir(parquetDir):
 
 print(p.keys())
 
-
+'''
 #User parameters
 #cats = ["baseline","ee","emu","mumu"]
 cats = ["baseline"]
@@ -433,14 +435,17 @@ for cat in cats:
         plt.show()
         plt.close()
 
+'''
+
 # muonIso: miniPFRelIso_chg WP: 0.4 eleIso: miniPFRelIso_chg WP: 0.4 bbWP: 0.0399
 ElectronIsoWP = [0.4]
+MuonMiniIsoWP = [0.4]
 MuonPFIsoWP = [0.4]
 BBWorkingPoints = [0.0399]
 ElectronIsoCollections = ["miniPFRelIso_chg" ]
 MuonIsoCollections =  ["miniPFRelIso_chg"]
 
-metWPs = [20, 50]
+metWPs = [0, 5, 10, 15, 20, 25, 30, 35, 40, 50] # 0-40 every 5 GeV # dilepton mass cut, custom cut function.py commented out,
 # below are whatwe had originally
 #ElectronIsoWP = [0.06]
 #MuonPFIsoWP = [0.25]
@@ -450,10 +455,12 @@ metWPs = [20, 50]
 #Note, the newest paper from BTV on bbtagging references WPs but doesn't seem to list them
 #ElectronIsoCollections = ["jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "pfRelIso03_chg","miniPFRelIso_chg", "dr03EcalRecHitSumEt", "dr03HcalDepth1TowerSumEt", "dr03TkSumPt", "dr03TkSumPtHEEP"]
 #MuonIsoCollections = ["jetRelIso","pfRelIso03_all", "miniPFRelIso_all" , "pfRelIso03_chg","miniPFRelIso_chg", "pfRelIso04_all"]
-f = open("METOptimization_20-50_usingisofromRyansStudy_April2.txt", "a")
+f = open("FatJetOptimization_200-350_usingisofromRyansStudy_April2_new.txt", "a")
 
-for metWP in metWPs:
-
+metWP = 0.
+jetWPs = [200., 225., 250., 275., 300., 325., 350.]
+#for metWP in metWPs:
+for jetWP in jetWPs:
     for muonIso in MuonIsoCollections:
         if "mini" in muonIso:
             muonWPs = MuonMiniIsoWP
@@ -507,6 +514,7 @@ for metWP in metWPs:
                                 fatEta = fatEta[mask_lepton_cleaning]
                                 fatPhi = fatPhi[mask_lepton_cleaning]
                                 fatPt = fatPt[mask_lepton_cleaning]
+                                #metPt = metPt[mask_lepton_cleaning] 
                                 #print(mask_lepton_cleaning)
                                 jetLeptonEta = ak.cartesian([jetEta,lepEta],axis=1,nested=True)
                                 jetLeptonPhi = ak.cartesian([jetPhi,lepPhi],axis=1,nested=True)
@@ -547,7 +555,8 @@ for metWP in metWPs:
                                 min_mass = (ll_mass>20) & (ll_mass<76)
                                 mass_window = ll_mass>106
                                 mass_cut = (min_mass) | (mass_window)
-                                eventMask = (nlep==2) & (ak.sum(lepPt>=25.0,axis=1)>=2) & (njet>=2) & (ll_charge==0) & (mass_cut) & (ak.sum(fatPt>=200,axis=1)>=1) & (ak.sum(metPt>=metWP,axis=1)==1)
+                                eventMask = (nlep==2) & (ak.sum(lepPt>=25.0,axis=1)>=2) & (njet>=2) & (ll_charge==0) & (mass_cut) & (ak.sum(fatPt>=jetWP,axis=1)>=1) & (ak.sum(metPt>=metWP,axis=0)>=1) #(metPt[0] >= metWP)  #(ak.sum(metPt>=metWP,axis=0))
+                                #print("metPt[0] ", metPt[0])
                                 #print("ll_charge",ll_charge)
                                 #print("ll_mass",ll_mass)
                                 #print("lepPt",lepPt)
@@ -570,8 +579,8 @@ for metWP in metWPs:
                                 else:
                                     cutFlow["OtherBkg"][cat] += ak.sum(weights)
                         for cat in ["baseline"]:
-                            print("muonIso",muonIso,"WP",muonWP,"eleIso",eleIso,"WP",eleWP,"bbWP",bbWP, " metWP", metWP )
-                            f.write("muonIso: {} WP: {} eleIso: {} WP: {} bbWP: {} \n".format(muonIso,muonWP,eleIso,eleWP,bbWP,metWP))
+                            print("muonIso",muonIso,"WP",muonWP,"eleIso",eleIso,"WP",eleWP,"bbWP",bbWP, "metWP", metWP, "jetWP", jetWP )
+                            f.write("muonIso: {} WP: {} eleIso: {} WP: {} bbWP: {} metWP: {} jetWP: {}\n".format(muonIso,muonWP,eleIso,eleWP,bbWP,metWP,jetWP))
                             print("Category:",cat)
                             f.write("Category: {}\n".format(cat))
                             signal = cutFlow["Signal"][cat]
