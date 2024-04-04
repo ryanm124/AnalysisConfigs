@@ -2,7 +2,7 @@ import awkward as ak
 from pocket_coffea.lib.cut_definition import Cut
 
 def dilepton(events, params, year, sample, **kwargs):
-    '''
+    
     MET = events[params["METbranch"][year]]
     # mass cut
     min_mass =  (events.ll.mass > 20) & (events.ll.mass < 76 )
@@ -29,12 +29,12 @@ def dilepton(events, params, year, sample, **kwargs):
         & mass_cut
         
     )
-    '''
-    mask = (
-        (ak.firsts(events.LeptonGood.pt) > params["pt_leading_lepton"])
-        & (events.nJetGood >= params["njet"])
-        & (events.nBJetGood >= params["nbjet"])
-        )
+    
+    #mask = (
+    #    (ak.firsts(events.LeptonGood.pt) > params["pt_leading_lepton"])
+    #    & (events.nJetGood >= params["njet"])
+    #    & (events.nBJetGood >= params["nbjet"])
+    #    )
     #print(mask)
     # Pad None values with False
     return ak.where(ak.is_none(mask), False, mask)
