@@ -138,7 +138,6 @@ vars = [
     "FatJetGood_tau3",
     "JetGood_eta",
     "JetGood_phi",
-    "JetGood_mass",
     "JetGood_pt",
     "MuonGood_eta",
     "MuonGood_phi",
