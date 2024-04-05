@@ -125,8 +125,30 @@ print(p.keys())
 #cats = ["baseline","ee","emu","mumu"]
 cats = ["baseline"]
 colors = ["red","orange","gold","yellow","green","cyan","blue","purple","sienna","greenyellow","lightblue"]
-vars = ["JetGood_pt"]#[] #columns to plot, leave empty for all columns
-modifier = "pt_1" #which objects to plot per event, options are: 'pt_#' where # goes from 1 to N with 1 being the leading pt object
+#vars = [] #["JetGood_pt"]#[] #columns to plot, leave empty for all columns
+vars = [
+    "FatJetGood_eta",
+    "FatJetGood_msoftdrop",
+    "FatJetGood_pt",
+    "FatJetGood_tau2",
+    "FatJetGood_tau4",
+    "FatJetGood_mass",
+    "FatJetGood_phi",
+    "FatJetGood_tau1",
+    "FatJetGood_tau3",
+    "JetGood_eta",
+    "JetGood_phi",
+    "JetGood_mass",
+    "JetGood_pt",
+    "MuonGood_eta",
+    "MuonGood_phi",
+    "MuonGood_pt",
+    "ElectronGood_eta",
+    "ElectronGood_phi",
+    "ElectronGood_pt"
+]
+
+modifier = "all" #"pt_1" #which objects to plot per event, options are: 'pt_#' where # goes from 1 to N with 1 being the leading pt object
                   #                                              'max' which plots the highest value of the parameter per event
                   #                                              'all' which plots all values of the parameter per event
 
@@ -402,6 +424,8 @@ for cat in cats:
         filepath = f"hists_optimizedLepIsoandbbTagging_0GeVMET/2018/{cat}/{col}"
         if not os.path.exists(filepath):
             os.makedirs(filepath)
+        print("Saving file...")
+        print(filepath+"/"+var+"_"+stringMod+".pdf")
         plt.savefig(filepath+"/"+var+"_"+stringMod+".pdf")
         plt.show()
         plt.clf()
