@@ -198,25 +198,26 @@ for cat in cats:
                     else:
                         ttbbSample = 'TTbbHadronic_Powheg__'
                     genTtbarId = p[name[:-4]][cat]["events_genTtbarId"] % 100
+                    genTtbarId = genTtbarId[met_mask]
                     tt_ttb_mask = genTtbarId > 50
                     
                     if(("V2" in var) and ("v7" in name)):
                         ttbb_data = p[ttbbSample][cat][var[:-2]]
                     else:
                         ttbb_data = p[ttbbSample][cat][var]
-                    genTtbarId = p[ttbbSample][cat]["events_genTtbarId"] % 100
-                    ttbb_ttb_mask = genTtbarId > 50
-
                     ttbbmetpt = p[ttbbSample][cat]["MET_pt"] 
                     ttbbmet_mask = ttbbmetpt > 5
-
+                    genTtbarId = p[ttbbSample][cat]["events_genTtbarId"] % 100
+                    genTtbarId = genTtbarId[ttbbmet_mask]
+                    ttbb_ttb_mask = genTtbarId > 50
                     ttbb_data = ttbb_data[ttbbmet_mask]
                     for weightVar in p[name[:-4]][cat].fields:
                         if ("weight" in weightVar):
                             ttbb_weight[weightVar] = p[ttbbSample][cat][weightVar]#[~met_mask]
                             print("....")
                             ttbb_weight[weightVar] = ttbb_weight[weightVar] / o['sum_genweights'][ttbbSample+'2018']
-                            ttbb_weight[weightVar] = ttbb_weight[weightVar][ttbb_ttb_mask&ttbbmet_mask]
+                            ttbb_weight[weightVar] = ttbb_weight[weightVar][ttbbmet_mask]
+                            ttbb_weight[weightVar] = ttbb_weight[weightVar][ttbb_ttb_mask]
                             #ttbb_weight[weightVar] = ttbb_weight[weightVar][ttbbmet_mask]
                             C = ak.sum(weight[weightVar][tt_ttb_mask])
                             D = ak.sum(ttbb_weight[weightVar])
@@ -227,10 +228,10 @@ for cat in cats:
                     
                     if(quantity!="N" and col!="events"):
                         print(name[:-4])
-                        pt_data = p[name[:-4]][cat][col+"_pt"]#[~met_mask]
+                        pt_data = p[name[:-4]][cat][col+"_pt"][met_mask]
                         sortIndices = ak.argsort(pt_data,ascending=False)
                         data = data[sortIndices]
-                        ttbb_pt_data = p[ttbbSample][cat][col+"_pt"]#[~met_mask]
+                        ttbb_pt_data = p[ttbbSample][cat][col+"_pt"][ttbbmet_mask]
                         sortIndices = ak.argsort(ttbb_pt_data,ascending=False)
                         ttbb_data = ttbb_data[sortIndices]
                         if "pt" in modifier:
@@ -379,8 +380,11 @@ for cat in cats:
             nData = [0.0]*len(bin_edges[:-1])
             for sample in dataSamples:
                 data = p[sample][cat][var]
+                metpt = p[sample][cat]["MET_pt"]
+                met_mask = metpt > 5
+                data = data[met_mask]
                 if(quantity!="N" and col!="events"): 
-                    pt_data = p[sample][cat][col+"_pt"]
+                    pt_data = p[sample][cat][col+"_pt"][met_mask]
                     sortIndices = ak.argsort(pt_data,ascending=False)
                     data = data[sortIndices]
                     if "pt" in modifier:
@@ -427,7 +431,7 @@ for cat in cats:
             stringMod = modifier.split("_")[1]
         else:
             stringMod = modifier
-        filepath = f"hists_optimizedLepIsoandbbTagging_0GeVMET/2018/{cat}/{col}"
+        filepath = f"hists_optimizedLepIsoandbbTagging_5GeVMET/2018/{cat}/{col}"
         if not os.path.exists(filepath):
             os.makedirs(filepath)
         print("Saving file...")
