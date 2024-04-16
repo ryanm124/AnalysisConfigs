@@ -79,11 +79,18 @@ def getPlotParams(var):
             return 8, 0, 8, fr"{col} N"
         else:
             return -1, -1, -1, f"{var}"
-    elif ("Lepton" in col):
+    elif (("Electron" in col) or ("Muon" in col)  ):
         if quantity == 'pt':
-            return 30, 0, 300, r"Lepton $p_{T}$"
+            if ("Electron" in col):
+                return 30, 0, 300, r"Electron $p_{T}$"
+            if ("Muon" in col):
+                return 30, 0, 300, r"Muon $p_{T}$"
+        elif ("PFRelIso" in quantity ):
+            return 20, 0, 1, f"{var}"
         else:
             return -1, -1, -1, f"{var}"
+    elif ("MET" in col ):
+        return 30, 0, 300, f"{var}"
     else:
         return -1, -1, -1, f"{var}"
     
@@ -126,6 +133,7 @@ print(p.keys())
 cats = ["baseline"]
 colors = ["red","orange","gold","yellow","green","cyan","blue","purple","sienna","greenyellow","lightblue"]
 #vars = [] #["JetGood_pt"]#[] #columns to plot, leave empty for all columns
+'''
 vars = [
     "FatJetGood_eta",
     "FatJetGood_msoftdrop",
@@ -146,8 +154,9 @@ vars = [
     "ElectronGood_phi",
     "ElectronGood_pt"
 ]
-
-modifier = "all" #"pt_1" #which objects to plot per event, options are: 'pt_#' where # goes from 1 to N with 1 being the leading pt object
+'''
+vars = []
+modifier = "pt_1"#"all" #"pt_1" #which objects to plot per event, options are: 'pt_#' where # goes from 1 to N with 1 being the leading pt object
                   #                                              'max' which plots the highest value of the parameter per event
                   #                                              'all' which plots all values of the parameter per event
 
@@ -160,7 +169,7 @@ for cat in cats:
     if(not len(vars)):
         vars = p['ttHTobb_']['baseline'].fields
     for var in vars:
-        if(("weight" in var) or ("Idx" in var) or ("Ttbar" in var)):
+        if(("weight" in var) or ("Idx" in var) or ("Ttbar" in var) or ("HEEP" in var) or ("dr0" in var) or ("ElectronGood_mvaTTH" in var) ):
             continue
         print("2018", cat, var)
         col = var.split("_")[0]
@@ -178,7 +187,7 @@ for cat in cats:
                 ttbb_weight = {}
                 name = getName(sample)
                 if(("V2" in var) and ("v7" in name)):
-                    data = p[name][cat][var[:-2]]
+                    data = p[name[:-4]][cat][var[:-2]]
                 else:
                     data = p[name[:-4]][cat][var]
                     #name = name[:-4]
@@ -234,10 +243,13 @@ for cat in cats:
                         ttbb_pt_data = p[ttbbSample][cat][col+"_pt"][ttbbmet_mask]
                         sortIndices = ak.argsort(ttbb_pt_data,ascending=False)
                         ttbb_data = ttbb_data[sortIndices]
-                        if "pt" in modifier:
+                        if (("pt" in modifier) and (col !="MET")):
                             index = int(modifier.split("_")[1]) - 1
                             ttbb_data = ak.mask(ttbb_data, ak.num(ttbb_data) > index)[:, index]
                             data = ak.mask(data, ak.num(data) > index)[:, index]
+                        if (("pt" in modifier) and (col =="MET")):
+                            ttbb_data = ttbb_data
+                            data = data
                         elif modifier=="max":
                             data = ak.max(data,axis=1)
                             ttbb_data = ak.max(ttbb_data,axis=1)
@@ -251,9 +263,12 @@ for cat in cats:
                     pt_data = p[name[:-4]][cat][col+"_pt"][met_mask]
                     sortIndices = ak.argsort(pt_data,ascending=False)
                     data = data[sortIndices]
-                    if "pt" in modifier:
+                    if (("pt" in modifier) and (col !="MET")):
                         index = int(modifier.split("_")[1]) - 1
                         data = ak.mask(data, ak.num(data) > index)[:, index]
+                    elif (("pt" in modifier) and (col =="MET")):
+                        #index = 1
+                        data = data #ak.mask(data, ak.num(data) > index)[:, index]
                     elif modifier=="max":
                         data = ak.max(data,axis=1)
                 for key in weight:
@@ -387,9 +402,11 @@ for cat in cats:
                     pt_data = p[sample][cat][col+"_pt"][met_mask]
                     sortIndices = ak.argsort(pt_data,ascending=False)
                     data = data[sortIndices]
-                    if "pt" in modifier:
+                    if (("pt" in modifier) and (col !="MET")):
                         index = int(modifier.split("_")[1]) - 1
                         data = ak.mask(data, ak.num(data) > index)[:, index]
+                    if (("pt" in modifier) and (col =="MET")):
+                        data = data
                     elif modifier=="max":
                         data = ak.max(data,axis=1)
                 none_mask = ak.is_none(data)
