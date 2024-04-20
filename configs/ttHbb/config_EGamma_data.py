@@ -125,7 +125,8 @@ cfg = Configurator(
 
     workflow = ttHbbBaseProcessor,
     #workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/a/asparker/ttHbb/chunks"},
-    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttHboosted_data/chunks/"},
+    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttHboosted_april3/chunks/"},
+    #workflow_options = {"dump_columns_as_arrays_per_chunk": "/afs/cern.ch/work/a/asparker/public/ttHboosted_april2"},
     
     # Skimming and categorization
     skim = [
@@ -232,7 +233,6 @@ cfg = Configurator(
                 ColOut("FatJetGood", ["eta", "pt", "phi", "mass", "msoftdrop", "tau1", "tau2", "tau3", "tau4", "btagDDBvLV2", "deepTagMD_ZHbbvsQCD", "deepTagMD_ZHccvsQCD", "deepTagMD_HbbvsQCD", "deepTagMD_bbvsLight", "btagHbb", "rhoQCD"]),
                 ColOut("MuonGood",["eta","pt","phi","mass","charge","jetRelIso","pfRelIso03_all", "miniPFRelIso_all" , "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH", "pfRelIso04_all" ]),
                 ColOut("ElectronGood",["eta","pt","phi","mass","charge","jetRelIso", "pfRelIso03_all","miniPFRelIso_all", "pfRelIso03_chg","miniPFRelIso_chg", "mvaTTH","dr03EcalRecHitSumEt", "dr03HcalDepth1TowerSumEt", "dr03TkSumPt", "dr03TkSumPtHEEP" ]),                
-                ColOut("events",["genTtbarId"],store_size=False),
                 ColOut("MET",["pt"])
             ]
         }

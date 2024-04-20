@@ -27,8 +27,8 @@ from pocket_coffea.parameters import defaults
 
 #aargs = get_year_from_args()
 year = "2018" #c#aargs[0] #'2018'#args.year
-samples = "bosons" #aargs[1]
-samples_list_string = "WW,WZ,ZZ,WJetsToLNu_HT-200To400,WJetsToLNu_HT-400To600,WJetsToLNu_HT-600To800,WJetsToLNu_HT-800To1200,WJetsToLNu_HT-1200To2500,WJetsToLNu_HT-2500ToInf,WJetsToQQ_HT400to600_v7,WJetsToQQ_HT600to800_v7,WJetsToQQ_HT800toInf_v7,ZJetsToQQ_HT400to600_v7,ZJetsToQQ_HT600to800_v7,ZJetsToQQ_HT800toInf_v7,DYJetsToLL_M-50_v7" #aargs[2]
+samples = "bosons" #aargs[1]  WJetsToLNu_HT-400To600
+samples_list_string = "WW,WZ,ZZ,WJetsToLNu_HT-200To400,WJetsToLNu_HT-600To800,WJetsToLNu_HT-800To1200,WJetsToLNu_HT-1200To2500,WJetsToLNu_HT-2500ToInf,WJetsToQQ_HT400to600_v7,WJetsToQQ_HT600to800_v7,WJetsToQQ_HT800toInf_v7,ZJetsToQQ_HT400to600_v7,ZJetsToQQ_HT600to800_v7,ZJetsToQQ_HT800toInf_v7,DYJetsToLL_M-50_v7" #aargs[2]
 
 print("samples_list_string")
 print(samples_list_string)
@@ -125,7 +125,7 @@ cfg = Configurator(
 
     workflow = ttHbbBaseProcessor,
     #workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/a/asparker/ttHbb/chunks"},
-    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttHboosted/chunks"},
+    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttHboosted_april3/chunks"},
     
     # Skimming and categorization
     skim = [

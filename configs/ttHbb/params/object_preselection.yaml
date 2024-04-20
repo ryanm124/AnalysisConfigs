@@ -2,11 +2,13 @@ object_preselection:
   Muon:
     pt: 15
     eta: 2.4
+    iso: 0.4
     id: looseId
 
   Electron:
     pt: 15
     eta: 2.4
+    iso: 0.4    
     id: mvaFall17V2Iso_WPL
 
   Jet:
@@ -24,6 +26,7 @@ object_preselection:
     pt: 200
     eta: 2.4
     jetId: 2
+
 
   GenJet:
     pt: 20

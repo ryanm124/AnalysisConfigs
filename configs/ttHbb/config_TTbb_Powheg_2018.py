@@ -27,8 +27,8 @@ from pocket_coffea.parameters import defaults
 
 #aargs = get_year_from_args()
 year = "2018" #c#aargs[0] #'2018'#args.year
-samples = "TTbb_Powheg" #aargs[1]
-samples_list_string = "TTbbDiLeptonic_Powheg,TTbbSemiLeptonic_Powheg,TTbbHadronic_Powheg" #aargs[2]
+samples = "TTbb_Powheg" #aargs[1] TTbbDiLeptonic_Powheg
+samples_list_string = "TTbbSemiLeptonic_Powheg,TTbbHadronic_Powheg" #aargs[2]
 
 print("samples_list_string")
 print(samples_list_string)
@@ -125,7 +125,7 @@ cfg = Configurator(
 
     workflow = ttHbbBaseProcessor,
     #workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/a/asparker/ttHbb/chunks"},
-    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttHboosted/chunks"},
+    workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttHboosted_april3/chunks"},
     
     # Skimming and categorization
     skim = [

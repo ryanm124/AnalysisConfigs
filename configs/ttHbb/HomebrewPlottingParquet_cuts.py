@@ -168,7 +168,7 @@ for cat in cats:
                 for weightVar in p[name[:-4]][cat].fields:          
                     if ("weight" in weightVar):
                         weight[weightVar] = p[name[:-4]][cat][weightVar]
-                        weight[weightVar] = weight[weightVar][met_mask]
+                        weight[weightVar] = weight[weightVar]#[met_mask]
                         weight[weightVar] = weight[weightVar] / o['sum_genweights'][name]
                 if(sample=="TTTo2L2Nu" or sample=="TTToSemiLeptonic" or sample=="TTToHadronic"):
                     if sample=="TTTo2L2Nu":
@@ -186,13 +186,13 @@ for cat in cats:
                     else:
                         ttbb_data = p[ttbbSample][cat][var]#[~met_mask]
 
-                    ttbb_data = ttbb_data[ttmet_mask]
+                    ttbb_data = ttbb_data#[ttmet_mask]
                     genTtbarId = p[ttbbSample][cat]["events_genTtbarId"] % 100
                     ttbb_ttb_mask = genTtbarId > 50
                     for weightVar in p[name[:-4]][cat].fields:
                         if ("weight" in weightVar):
                             ttbb_weight[weightVar] = p[ttbbSample][cat][weightVar]#[~met_mask]
-                            ttbb_weight[weightVar] = ttbb_weight[weightVar][ttmet_mask]
+                            ttbb_weight[weightVar] = ttbb_weight[weightVar]#[ttmet_mask]
                             print("....")
                             ttbb_weight[weightVar] = ttbb_weight[weightVar] / o['sum_genweights'][ttbbSample+'2018']
                             ttbb_weight[weightVar] = ttbb_weight[weightVar][ttbb_ttb_mask]
@@ -200,10 +200,10 @@ for cat in cats:
                             D = ak.sum(ttbb_weight[weightVar])
                             ttbb_weight[weightVar] = ttbb_weight[weightVar] * (C/D)
 
-                    for key in weight:
-                        #weight[key] = weight[key][~met_mask]                        
+                    for key in weight:                     
                         weight[key] = weight[key][~tt_ttb_mask]
-                    
+                        weight[key] = weight[key][met_mask]   
+
                     if(quantity!="N" and col!="events"):
                         print(name[:-4])
                         pt_data = p[name[:-4]][cat][col+"_pt"]#[~met_mask]
