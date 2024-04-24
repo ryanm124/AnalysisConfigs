@@ -30,6 +30,7 @@ source myenv/bin/activate
 ```
 git clone git@github.com:ryanm124/PocketCoffea.git
 cd PocketCoffea
+git checkout SRstudies
 ```
 # Install in EDITABLE mode
 ```
@@ -39,6 +40,8 @@ pip install -e .[dev]
 ### Clone locally the AnalysisConfigs repo
 ```
 git clone git@github.com:ryanm124/AnalysisConfigs.git
+cd AnalysisConfigs
+git checkout SRstudies
 ```
 
 ## To run the code
@@ -62,6 +65,8 @@ build_datasets.py --cfg datasets/WJets_2500_2018.json -ws T2_CH_CERN -o
 
 ```
 #### run config with dataset names (configs 1-9 and 12-20 are the ones you need to add up to get all data and MC for 2018)
+be sure to change the output file location for the parquet files and to creat that directory e.g. /eos/cms/store/user/asparker/ttHboosted_apri24/chunks
+Note that you will need to move the files from EOS after processing them as the EOS files are not viewable in the jupyter notebooks we use within the signularity container
 ```
 runner.py --cfg config_EGamma_data.py -o production_March14 --executor dask@lxplus --custom-run-options custom_run_options.yaml
 runner.py --cfg config_SingleMuon_data_2018.py -o production_March14 --executor dask@lxplus --custom-run-options custom_run_options.yaml
