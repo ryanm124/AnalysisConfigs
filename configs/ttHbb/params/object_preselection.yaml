@@ -2,14 +2,13 @@ object_preselection:
   Muon:
     pt: 15
     eta: 2.4
-    iso: 0.4
-    id: looseId
+    iso: 0.25
+    id: tightId
 
   Electron:
     pt: 15
-    eta: 2.4
-    iso: 0.4    
-    id: mvaFall17V2Iso_WPL
+    eta: 2.4   
+    id: tightId
 
   Jet:
     dr_lepton: 0.4
@@ -23,7 +22,7 @@ object_preselection:
 
   FatJet:
     dr_lepton: 0.8
-    pt: 200
+    pt: 300
     eta: 2.4
     jetId: 2
 
