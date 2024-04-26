@@ -98,7 +98,13 @@ class ttHbbBaseProcessor(BaseProcessorABC):
         self.events["ll"] = get_dilepton(
             self.events.ElectronGood, self.events.MuonGood
         )
-        
+        self.events["lepW"] = get_lepW(
+            self.events.ElectronGood, self.events.MuonGood, self.events.MET
+        )
+
+        self.events["hadW"] = get_hadW(
+            self.events.JetGood , self.events.nJetGood, self.events.nBJetGood
+        )
 
     def count_objects(self, variation):
         self.events["nMuonGood"] = ak.num(self.events.MuonGood)
