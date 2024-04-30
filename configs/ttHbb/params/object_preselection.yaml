@@ -8,7 +8,7 @@ object_preselection:
   Electron:
     pt: 15
     eta: 2.4   
-    id: tightId
+    id: cutBased
 
   Jet:
     dr_lepton: 0.4

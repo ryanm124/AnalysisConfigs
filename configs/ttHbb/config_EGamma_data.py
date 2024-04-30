@@ -127,7 +127,7 @@ cfg = Configurator(
     #workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eosuser.cern.ch//eos/user/a/asparker/ttHbb/chunks"},
     workflow_options = {"dump_columns_as_arrays_per_chunk": "root://eoscms.cern.ch//eos/cms/store/user/asparker/ttHboosted_april3/chunks/"},
     #workflow_options = {"dump_columns_as_arrays_per_chunk": "/afs/cern.ch/work/a/asparker/public/ttHboosted_april2"},
-    
+
     # Skimming and categorization
     skim = [
              get_nObj_min(1, 200., "FatJet"),

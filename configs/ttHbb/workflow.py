@@ -10,6 +10,8 @@ from pocket_coffea.lib.objects import (
     btagging,
     bbtagging,
     get_dilepton,
+    get_lepW,
+    get_hadW
 )
 import numpy
 import logging
@@ -99,11 +101,11 @@ class ttHbbBaseProcessor(BaseProcessorABC):
             self.events.ElectronGood, self.events.MuonGood
         )
         self.events["lepW"] = get_lepW(
-            self.events.ElectronGood, self.events.MuonGood, self.events.MET
+            self.events.ElectronGood, self.events.MuonGood, self.events.MET, self.events.JetGood, self.events.FatJetGood 
         )
 
         self.events["hadW"] = get_hadW(
-            self.events.JetGood , self.events.nJetGood, self.events.nBJetGood
+            self.events.JetGood , self.events.BJetGood, self.events.FatJetGood
         )
 
     def count_objects(self, variation):
